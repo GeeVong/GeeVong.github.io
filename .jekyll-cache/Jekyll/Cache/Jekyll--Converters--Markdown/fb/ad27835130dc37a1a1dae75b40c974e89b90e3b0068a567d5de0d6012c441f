@@ -1,0 +1,6 @@
+I"�<p>下面其实是memmove的实现
+```c++
+   void * memmove(void * dst, void * src, size_t count)
+       {
+               void * ret = dst;</p>
+:ET

@@ -1,0 +1,175 @@
+I"-0<h2 id="服务发现">服务发现</h2>
+
+<h4 id="疑问">疑问</h4>
+
+<p>资料：https://zhuanlan.zhihu.com/p/34332329</p>
+
+<p>对于服务发现，第一映象是etcd，consul，nats这些工具，假如自己实现一个服务发现，应该怎么做呢。首先，浮现脑海中的问题就是，什么是服务发现？它的需求来源是什么？</p>
+
+<p>通过上面对服务的创建过程的分析：</p>
+
+<p>​	1.服务会在service_pool中做存储（K: serviceID–string类型   v：func(serviceInfo *ServiceInfo) ServiceInterface 函数变量，返回值为ServiceInterface），并且返回一个ServiceInterface实例</p>
+
+<p>​	2.通过拿到的ServiceInterface实例在管理器中对服务进行注册</p>
+
+<p>资料：</p>
+
+<p>​		1.服务发现存在以下角色：服务提供者、服务消费者和服务中介，服务中介就是一个字典，字典里有很多key/value键值对，key是服务名称，value是服务提供者的地址列表。服务注册就是调用字典的Put方法塞东西，服务查找就是调用字典的Get方法拿东西。当服务提供者节点挂掉时，要求服务能够及时取消注册，比便及时通知消费者重新获取服务地址。</p>
+
+<p>所以现在我们知道一下信息：</p>
+
+<p>​	1. 服务提供者就是服务本身， 服务中介就是服务池，服务消费者也是服务</p>
+
+<p>​	2.service_mgr和service_pool中会维护多个服务的状态，服务之间（假设一个进程部署一个服务）可能存在：1对1调用，1对n调用，n对n调用。</p>
+
+<h3 id="服务发现启动">服务发现启动</h3>
+
+<p>​	我们在ServeiceMgr 初始化过程中，会对进程监控器实例化，NewRedisServiceWatcher，当前服务在启动的时候，加入到TableList</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td><td class="rouge-code"><pre>    <span class="k">go</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+      <span class="n">lgames</span><span class="o">.</span><span class="n">LogInfo</span><span class="p">(</span><span class="n">self</span><span class="o">.</span><span class="n">GetProcessID</span><span class="p">(),</span> <span class="s">"分布式模式"</span><span class="p">)</span>
+      <span class="k">defer</span> <span class="n">lgames</span><span class="o">.</span><span class="n">PanicDebugStack</span><span class="p">(</span><span class="s">""</span><span class="p">)</span>
+      <span class="n">PathAppServer</span> <span class="o">=</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Sprintf</span><span class="p">(</span><span class="s">"%s/%s/%s/%s"</span><span class="p">,</span> <span class="n">self</span><span class="o">.</span><span class="n">ServerInfo</span><span class="o">.</span><span class="n">GameID</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">ETCD_PATH_PROCESS</span><span class="p">)</span>
+      <span class="c">//etcdHosts := appConfig.INIConfig.GetString("etcd", "host", "")</span>
+      <span class="c">//var etcdHostList = lgames.StringToList(etcdHosts, "list&lt;string&gt;", ";").([]string)</span>
+      <span class="c">//self.serviceWatcher = NewServiceWatcherETCD(self.ServerInfo.ProcessID, self.ServerInfo.GameID, serverDesc, PathAppServer, etcdHostList)</span>
+<span class="c">/*    self.serviceWatcher = NewMySqlServiceWatcher(self.ServerInfo.ProcessID, self.ServerInfo.GameID, serverDesc, PathAppServer, dbConfig, false)
+      self.serviceWatcher.StartRun()
+      self.serviceWatcher.NewTable(PathAppServer)*/</span>
+      <span class="n">id</span> <span class="o">:=</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Sprintf</span><span class="p">(</span><span class="s">"%s/%s"</span><span class="p">,</span> <span class="n">PathAppServer</span><span class="p">,</span><span class="n">self</span><span class="o">.</span><span class="n">ServerInfo</span><span class="o">.</span><span class="n">ProcessID</span><span class="p">)</span>
+      <span class="n">value</span><span class="p">,</span> <span class="n">_</span> <span class="o">:=</span> <span class="n">jsoniter</span><span class="o">.</span><span class="n">Marshal</span><span class="p">(</span><span class="n">self</span><span class="o">.</span><span class="n">ServerInfo</span><span class="p">)</span>
+<span class="c">/*    globalServiceWatcher := NewMySqlServiceWatcher(id,
+         self.ServerInfo.ProcessID,  string(value), PathAppServer, globalDBConfig)
+      globalServiceWatcher.StartRun()*/</span>
+
+      <span class="n">self</span><span class="o">.</span><span class="n">globalServiceWatcher</span> <span class="o">=</span> <span class="n">NewRedisServiceWatcher</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="n">self</span><span class="o">.</span><span class="n">ServerInfo</span><span class="o">.</span><span class="n">ProcessID</span><span class="p">,</span>  <span class="kt">string</span><span class="p">(</span><span class="n">value</span><span class="p">),</span><span class="n">PathAppServer</span><span class="p">,</span><span class="n">constant</span><span class="o">.</span><span class="n">RDS_MAIN</span><span class="p">)</span>
+      <span class="n">self</span><span class="o">.</span><span class="n">globalServiceWatcher</span><span class="o">.</span><span class="n">StartRun</span><span class="p">()</span>
+      <span class="c">//self.globalServiceWatcher.NewTable(PathAppServer)</span>
+      <span class="c">//self.createWatcher(PathAppServer, self.GetProcessID(), string(value))</span>
+   <span class="p">}()</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="服务状态维护">服务状态维护</h3>
+
+<p>redis 服务发现状态数据结构</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+</pre></td><td class="rouge-code"><pre><span class="k">type</span> <span class="n">ServiceWatcher_Redis</span> <span class="k">struct</span> <span class="p">{</span>
+   <span class="n">ServiceWatcher</span>
+   <span class="c">//-----------------------------</span>
+   <span class="n">lastInsertId</span> <span class="kt">uint32</span>
+   <span class="n">redisCache</span> <span class="n">cache</span><span class="o">.</span><span class="n">Cache</span>
+   <span class="n">nextKeepAliveTime</span>   <span class="kt">int64</span>
+   <span class="n">nextClearExpireTime</span> <span class="kt">int64</span>
+   <span class="n">nextWatchServerTime</span> <span class="kt">int64</span>
+   <span class="n">expireApps</span> <span class="p">[]</span><span class="kt">string</span>
+   <span class="n">TableKeyMap</span>    <span class="k">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span>  <span class="c">// 服务列表</span>
+
+<span class="p">}</span>
+
+<span class="k">type</span> <span class="n">ServiceWatcher</span> <span class="k">struct</span> <span class="p">{</span>
+	<span class="n">common</span><span class="o">.</span><span class="n">ThreadObject</span>
+	<span class="c">//--------------------------</span>
+	<span class="n">WatcherID</span>   <span class="kt">string</span>  <span class="c">// 进程id  fmt.Sprintf("%s/%s", PathAppServer,self.ServerInfo.ProcessID)</span>
+	<span class="n">WatcherName</span> <span class="kt">string</span>	<span class="c">// ip+端口 fmt.Sprintf("%s:%d", serverIpHost, serverIpPort)</span>
+	<span class="n">ServiceDesc</span> <span class="kt">string</span>  <span class="c">// 当前进程信息 value, _ := jsoniter.Marshal(self.ServerInfo)</span>
+	<span class="n">DefaultPath</span> <span class="kt">string</span>  <span class="c">// 标识当前节点类型 fmt.Sprintf("%s/%s/%s/%s", self.ServerInfo.GameID, env, version, ETCD_PATH_PROCESS)</span>
+    					<span class="c">// bingqiu_yn_dl+kaifa+20190510+appServer 用于区分是否在同一个集群</span>
+	<span class="n">TableList</span> <span class="p">[]</span><span class="kt">string</span>  <span class="c">// append(newService.TableList,table)  bingqiu_yn_dl+kaifa+20190510+appServer</span>
+	<span class="n">isStartWatch</span> <span class="kt">bool</span>
+<span class="p">}</span>
+
+
+<span class="k">func</span> <span class="n">NewRedisServiceWatcher</span><span class="p">(</span><span class="n">id</span> <span class="kt">string</span><span class="p">,</span> <span class="n">name</span> <span class="kt">string</span><span class="p">,</span> <span class="n">info</span> <span class="kt">string</span><span class="p">,</span> <span class="n">table</span> <span class="kt">string</span><span class="p">,</span> <span class="n">cacheName</span> <span class="kt">string</span><span class="p">)</span> <span class="n">IServiceWatcher</span> <span class="p">{</span>
+	<span class="n">newService</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="n">ServiceWatcher_Redis</span><span class="p">{}</span>
+	<span class="n">newService</span><span class="o">.</span><span class="n">WatcherID</span> <span class="o">=</span> <span class="n">id</span>
+	<span class="n">newService</span><span class="o">.</span><span class="n">WatcherName</span> <span class="o">=</span> <span class="n">name</span>
+	<span class="n">newService</span><span class="o">.</span><span class="n">DefaultPath</span> <span class="o">=</span> <span class="n">table</span>
+	<span class="n">newService</span><span class="o">.</span><span class="n">TableList</span> <span class="o">=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">string</span><span class="p">,</span><span class="m">0</span><span class="p">)</span>
+	<span class="n">newService</span><span class="o">.</span><span class="n">TableList</span> <span class="o">=</span> <span class="nb">append</span><span class="p">(</span><span class="n">newService</span><span class="o">.</span><span class="n">TableList</span><span class="p">,</span><span class="n">table</span><span class="p">)</span>
+	<span class="n">newService</span><span class="o">.</span><span class="n">ServiceDesc</span> <span class="o">=</span> <span class="n">info</span>
+	<span class="n">newService</span><span class="o">.</span><span class="n">TableKeyMap</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="k">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">)</span>
+	<span class="n">newService</span><span class="o">.</span><span class="n">redisCache</span>  <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Mgr</span><span class="p">()</span><span class="o">.</span><span class="n">FindCache</span><span class="p">(</span><span class="n">cacheName</span><span class="p">)</span>
+	<span class="k">return</span> <span class="n">newService</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>TickRun 检查服务列表，4秒做一次检查， loadAppServer更新TableList</p>
+
+<p>keepAlive 本地服务状态检查</p>
+
+<h3 id="服务间如何建立连接如何判断两个服务不是是在同一个集群">服务间如何建立连接，如何判断两个服务不是是在同一个集群</h3>
+
+<p>当本地服务完成ServiceWatcher 实例的创建之后，通过TickRun 定时拉取redis所有的APP信息:</p>
+
+<p>​	1.对self.TableKeyMap检查，如果有服务挂掉，关闭连接</p>
+
+<p>​	2.对tableKeyMap检查，如果发现新的服务，建立连接</p>
+
+<h4 id="发起连接">发起连接</h4>
+
+<p>​</p>
+
+<h3 id="总结">总结</h3>
+
+<p>分布式系统中，redis做服务发现，所有节点依赖redis集群做服务的发现。当有一个新的服务启动的时候，需要到redis RDS_MAIN集群拉取缓存信息</p>
+
+:ET

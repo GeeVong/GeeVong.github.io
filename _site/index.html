@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="关于程序与设计、黑客与画家 | 黄琪 Sever Engineer，GameDevper | 这里是 @Huangqi黄琪 的个人博客，找寻乐趣，做有趣的事，哈哈哈～">
+    <meta name="keywords"  content=" 黄琪 Sever Engineer，GameDevper, Huang Blog, 博客, 个人网站, 游戏开发, c++, goland, lua, 服务器">
+    <meta name="theme-color" content="#000000">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Q&H's Blog">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="Find what you wanted">
+    
+    <meta property="og:image" content="https://7huang.github.io//img/avatar-me-ny.jpg">
+    <meta property="og:url" content="https://7huang.github.io//">
+    <meta property="og:site_name" content="Q&H's Blog">
+    
+    <title>Q&H's Blog</title>
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/pwa/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://7huang.github.io//">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Q&H Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="/archive/">Archive</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                    <li>
+                        <a href="/portfolio/">Portfolio</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    var __HuxNav__ = {
+        close: function(){
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        },
+        open: function(){
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+
+    // Bind Event
+    $toggle.addEventListener('click', function(e){
+        if ($navbar.className.indexOf('in') > 0) {
+            __HuxNav__.close()
+        }else{
+            __HuxNav__.open()
+        }
+    })
+
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from 
+     * $toggle/$collapse will break global delegation.
+     * 
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close HuxNav.  
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function(e){
+        if(e.target == $toggle) return;
+        if(e.target.className == 'icon-bar') return;
+        __HuxNav__.close();
+    })
+</script>
+
+
+    <!-- Page Header -->
+
+
+
+
+
+
+
+<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        
+        <div class="site-heading">
+        
+          <h1>Q&H Blog</h1>
+          <span class="subheading">Find what you wanted</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+<!-- Main Content -->
+<div class="container">
+	<div class="row">
+        
+
+<!-- USE SIDEBAR -->
+    <!-- PostList Container -->
+    		<div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                postlist-container
+            ">
+    			
+<div class="post-preview">
+    <a href="/game/2021/02/11/recharge/">
+        <h2 class="post-title">
+            充值系统设计
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                充值系统设计
+
+写在前
+
+下面是王者荣耀的充值系统，这是对于玩家可见部分，玩家点击购买，iso弹窗显示指纹支付，指纹验证成功，完成订单支付，客户端收到点券，去下支付，提示支付失败。那么当中到底是怎么完成这一整套流程的呢？下面就来探究
+
+
+
+流程概述
+
+
+  充值系统存在交互方：
+    
+      客户端 Client
+      游戏服务器 GameServer
+      平台 Thi...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Q&H Blog on February 11, 2021
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/game/2021/01/12/service_find/">
+        <h2 class="post-title">
+            服务发现
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                服务发现
+
+疑问
+
+资料：https://zhuanlan.zhihu.com/p/34332329
+
+对于服务发现，第一映象是etcd，consul，nats这些工具，假如自己实现一个服务发现，应该怎么做呢。首先，浮现脑海中的问题就是，什么是服务发现？它的需求来源是什么？
+
+通过上面对服务的创建过程的分析：
+
+​	1.服务会在service_pool中做存储（K: serviceID–st...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Q&H Blog on January 12, 2021
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/hiking/2020/09/15/cdd/">
+        <h2 class="post-title">
+            船底顶
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                开船前八个小时得到消息，用两分钟决定报名，花三个小时去迪卡侬采购装备。再花一个小时打包行李。就这样，一个户外小白去了广东户外毕业线船底顶。
+
+
+
+这一趟遇到挺多熟悉面孔，冰姐，大师，陈姐，王鹏，还有领队高山，讲来也是缘分，实属意外惊喜。
+
+
+
+一路上，湿滑的丛林，凉快的溪谷，陡峭的悬崖，爬不完的乱石坡，伤心大草原(绝望)，就这样的日出，完美的日落，4点的星空。
+
+回顾过来，两天时间经历的风景...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Q&H Blog on September 15, 2020
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/think/2020/02/09/gomoduleproblem/">
+        <h2 class="post-title">
+            go module
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                go module 问题：本文记录go module 使用过程中遇到的问题
+资料参考
+https://eddycjy.com/posts/go/go-moduels/2020-02-28-go-modules/
+
+####本文要点：
+
+1
+2
+3
+1.从0开始搭建go开发环境
+2.go项目依赖包管理实践操作--使用module
+3.项目托管git实践操作
+
+
+1.从0开始搭建go开发环境
+
+...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Q&H Blog on February 9, 2020
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/think/2020/02/09/lifecanbemoremagic/">
+        <h2 class="post-title">
+            你都以为自己有独立的思想与思考，我们有吗？
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                2020，没有年味的一年。疫情爆发，武汉封城。科比坠机，魔幻开局。
+
+信息爆炸，同样的一件事情，不同的人可以带来不同的解读。有的可能与你的观点契合，有的亦或与你相悖。自媒体时代，人人都在表达者“自己”的思想与价值观，你都以为自己有独立的思想与思考，我们有吗？
+
+不追结责任，只关乎实质。言论这个东西很难几句话讲通。前有口罩难求，后有双黄连疯狂带货，顺带莲蓉月饼也火了。
+
+这是我当时发的朋友圈：...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Q&H Blog on February 9, 2020
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/%E5%8A%A8%E5%8A%A8%E6%89%8B/2020/01/28/concurrent-map/">
+        <h2 class="post-title">
+            并发模式下map的使用
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                1.读写锁
+
+2.sync.Map
+
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Q&H Blog on January 28, 2020
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/%E6%95%A3%E6%95%A3%E5%BF%83/2019/12/11/hiking3/">
+        <h2 class="post-title">
+            Hiking
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                韶关云髻山远足，那一年2019，12月初八有余。真正意义上的一次登山，1400海拔，记～
+
+自从偶然徒步肇庆羚羊峡之后，这个人好像迷上了徒步，为什么？谁知道呢，反正连他自己都不知道为啥。
+
+
+
+这个人没走几步就累得不行，脸红耳赤，走一段停一段。同行的一个全副武装女队员背了个小音响，放着他霉的新歌，这傻逼甚至有点开心。他们女领队是个火急火燎的家伙，做事干练，操心着队员的安危。上山的路难走，上山...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Q&H Blog on December 11, 2019
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/%E8%AF%B4%E8%AF%B4%E8%AF%9D/2019/12/11/2019%E5%B9%B4%E6%80%BB%E7%BB%93/">
+        <h2 class="post-title">
+            2019年总结
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                2019你在干啥
+
+看有道云笔记，貌似2019年干了很多事情嘛 :)
+
+生活
+
+新认识了很多圈内朋友，也结识了一下其他行业的朋友，机遇与挑战皆有，两次改变职业走向的机遇，切身感受到机会只留给有准备的人，不知道自己选择是否正确。真正体会到工作和生活平衡的难度，国庆回了一趟老家，老妈的白头发已经多到数不清了，父亲苍老了一圈，说现在爬6楼都有点气喘了。犹豫过是否回老家，但还是选择了前行。
+
+
+
+工...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Q&H Blog on December 11, 2019
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/%E5%8A%A8%E5%8A%A8%E6%89%8B/2019/09/27/%E5%8D%9A%E5%AE%A2%E8%AE%B0%E5%BD%95/">
+        <h2 class="post-title">
+            优质技术博客整理~持续更新
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                #优质技术博客整理
+
+高质量技术博客
+
+
+王垠 - 我当然是在扯淡 | fluent c++ 
+ 土地哥 - Manistein  | Geek_Ling - hello world 
+ fingerpass) | joyfire 王乐珩 
+ 云风 - skynet开源者 | 27 - 波函数塌缩算法 
+ 刘未鹏 | CodingLabs - malloc实现 
+ 技术人生 | 沙湖王 
+ ...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Q&H Blog on September 27, 2019
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/%E5%8A%A8%E5%8A%A8%E6%89%8B/2019/09/10/vscode%E5%90%84%E7%A7%8D%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
+        <h2 class="post-title">
+            各种语言vscode开发环境搭建-持续更新
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                C#环境搭建
+
+
+  
+    下载.Net Core
+  
+  安装
+  vscode编辑器安装
+  
+    Viscose Plugin  C# for Visual Studio Code 安装
+  
+  
+    dotnet  new  console 创建控制台程序
+
+    1
+2
+3
+4
+5
+6
+7
+8
+hqdeMac-mini:test01 hq$ dotnet new ...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Q&H Blog on September 10, 2019
+    </p>
+</div>
+<hr>
+
+
+<!-- Pager -->
+
+<ul class="pager">
+    
+    
+    <li class="next">
+        <a href="/page2">Older Posts &rarr;</a>
+    </li>
+    
+</ul>
+
+
+    		</div>
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-3 col-lg-offset-0
+                col-md-3 col-md-offset-0
+                col-sm-12
+                col-xs-12
+                sidebar-container
+            ">
+                <!-- Featured Tags -->
+                
+
+
+<section>
+    
+    <h5><a href="/archive/">FEATURED TAGS</a></h5>
+    <div class="tags">
+        
+        
+        
+        </a>
+        
+        
+                <a data-sort="0022" 
+                    href="/archive/?tag=%E8%83%A1%E8%AF%8C%E8%AF%8C"
+                    title="胡诌诌"
+                    rel="3">胡诌诌</a>
+        
+                <a data-sort="0022" 
+                    href="/archive/?tag=tool"
+                    title="tool"
+                    rel="3">tool</a>
+        
+                <a data-sort="0023" 
+                    href="/archive/?tag=%E6%80%BB%E7%BB%93"
+                    title="总结"
+                    rel="2">总结</a>
+        
+                <a data-sort="0023" 
+                    href="/archive/?tag=idea"
+                    title="idea"
+                    rel="2">idea</a>
+        
+                <a data-sort="0023" 
+                    href="/archive/?tag=jekyll"
+                    title="jekyll"
+                    rel="2">jekyll</a>
+        
+                <a data-sort="0023" 
+                    href="/archive/?tag=writing"
+                    title="writing"
+                    rel="2">writing
+    </div>
+</section>
+
+
+                <!-- Short About -->
+                <section class="visible-md visible-lg">
+  <hr>
+  <h5><a href="/about/">ABOUT ME</a></h5>
+  <div class="short-about">
+    
+    <img src="/img/avatar-me-ny.jpg" />
+    
+    
+    <p>做一个有趣会思考的逗比<br>争渡</p>
+    
+    <!-- SNS Link -->
+    
+
+
+<ul class="list-inline">
+
+
+  
+  
+  <li>
+    <a href="https://twitter.com/https://github.com/7huang">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  <li>
+    <a target="_blank" href="https://www.zhihu.com/people/xxxx">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa  fa-stack-1x fa-inverse">知</i>
+      </span>
+    </a>
+  </li>
+  
+  
+  <li>
+    <a target="_blank" href="http://weibo.com/xxxx">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  
+  <li>
+    <a target="_blank" href="https://github.com/7huang">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+</ul>
+  </div>
+</section>
+
+                <!-- Friends Blog -->
+                
+<hr>
+<h5>FRIENDS</h5>
+<ul class="list-inline">
+  
+</ul>
+
+    		</div>
+        
+	</div>
+</div>
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <!-- SNS Link -->
+                
+
+
+<ul class="list-inline text-center">
+
+
+  
+  
+  <li>
+    <a href="https://twitter.com/https://github.com/7huang">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  <li>
+    <a target="_blank" href="https://www.zhihu.com/people/xxxx">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa  fa-stack-1x fa-inverse">知</i>
+      </span>
+    </a>
+  </li>
+  
+  
+  <li>
+    <a target="_blank" href="http://weibo.com/xxxx">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  
+  <li>
+    <a target="_blank" href="https://github.com/7huang">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+</ul>
+
+                <p class="copyright text-muted">
+                    Copyright &copy; Q&H Blog 2023
+                    <br>
+                    Powered by <a href="https://7huang.github.io/">Hux Blog</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+<!-- Service Worker -->
+
+<script src="/js/snackbar.js "></script>
+<script src="/js/sw-registration.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+
+
+
+<!--fastClick.js -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+<!-- Side Catalog -->
+
+
+
+<!-- Multi-Lingual -->
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

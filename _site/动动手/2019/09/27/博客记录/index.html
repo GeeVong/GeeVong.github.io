@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="关于程序与设计、黑客与画家 | 黄琪 Sever Engineer，GameDevper | 这里是 @Huangqi黄琪 的个人博客，找寻乐趣，做有趣的事，哈哈哈～">
+    <meta name="keywords"  content=" 黄琪 Sever Engineer，GameDevper, Huang Blog, 博客, 个人网站, 游戏开发, c++, goland, lua, 服务器">
+    <meta name="theme-color" content="#000000">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="优质技术博客整理~持续更新 - Q&H's Blog">
+    
+    <meta property="og:type" content="article">
+    <meta property="og:description" content="#优质技术博客整理
+">
+    
+    <meta property="article:published_time" content="2019-09-27T00:00:00Z">
+    
+    
+    
+    <meta property="article:tag" content="tool">
+    
+    
+    <meta property="og:image" content="https://7huang.github.io//img/avatar-me-ny.jpg">
+    <meta property="og:url" content="https://7huang.github.io//%E5%8A%A8%E5%8A%A8%E6%89%8B/2019/09/27/%E5%8D%9A%E5%AE%A2%E8%AE%B0%E5%BD%95/">
+    <meta property="og:site_name" content="Q&H's Blog">
+    
+    <title>优质技术博客整理~持续更新 - Q&H's Blog</title>
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/pwa/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://7huang.github.io//%E5%8A%A8%E5%8A%A8%E6%89%8B/2019/09/27/%E5%8D%9A%E5%AE%A2%E8%AE%B0%E5%BD%95/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Q&H Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="/archive/">Archive</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                    <li>
+                        <a href="/portfolio/">Portfolio</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    var __HuxNav__ = {
+        close: function(){
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        },
+        open: function(){
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+
+    // Bind Event
+    $toggle.addEventListener('click', function(e){
+        if ($navbar.className.indexOf('in') > 0) {
+            __HuxNav__.close()
+        }else{
+            __HuxNav__.open()
+        }
+    })
+
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from 
+     * $toggle/$collapse will break global delegation.
+     * 
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close HuxNav.  
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function(e){
+        if(e.target == $toggle) return;
+        if(e.target.className == 'icon-bar') return;
+        __HuxNav__.close();
+    })
+</script>
+
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/home-bg.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+
+
+
+<style type="text/css">
+    header.intro-header{
+        position: relative;
+        background-image: url('/img/home-bg.jpg');
+        background: ;
+    }
+
+    
+</style>
+
+<header class="intro-header style-text" >
+
+    <div class="header-mask"></div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/archive/?tag=tool" title="tool">tool</a>
+                        
+                    </div>
+                    <h1>优质技术博客整理~持续更新</h1>
+                    
+                    <h2 class="subheading"></h2>
+                    <span class="meta">Posted by Q&H Blog on September 27, 2019</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <!-- Multi-Lingual -->
+                
+
+				<p>#优质技术博客整理</p>
+
+<h2 id="高质量技术博客">高质量技术博客</h2>
+
+<hr />
+<p><a href="http://www.yinwang.org">王垠 - 我当然是在扯淡</a> | <a href="https://www.fluentcpp.com/posts/">fluent c++</a> 
+ <a href="https://manistein.github.io/blog/">土地哥 - Manistein </a> | <a href="https://www.cnblogs.com/yanlingyin/archive/2012/03/05/2379199.html">Geek_Ling - hello world</a> 
+ <a href="https://www.cnblogs.com/fingerpass/">fingerpass</a>) | <a href="http://wangleheng.com/">joyfire 王乐珩</a> 
+ <a href="https://blog.codingnow.com/2014/05/skynet_v020.html">云风 - skynet开源者</a> | <a href="https://www.jianshu.com/p/1c4aea05d434">27 - 波函数塌缩算法</a> 
+ <a href="http://mindhacks.cn/author/pongba/">刘未鹏</a> | <a href="http://blog.codinglabs.org/articles/a-malloc-tutorial.html">CodingLabs - malloc实现</a> 
+ <a href="http://www.luzexi.com/">技术人生</a> | <a href="http://shahuwang.com/">沙湖王</a> 
+ <a href="[http://www.wjgbaby.com/2018/06/13/3d%e6%95%b0%e5%ad%a6%e5%b8%b8%e7%94%a8%e7%9a%84%e7%9f%a9%e9%98%b5%e5%85%ac%e5%bc%8f%e6%80%bb%e7%bb%93/](http://www.wjgbaby.com/2018/06/13/3d数学常用的矩阵公式总结/)">止戈 – 3D数学常用的矩阵公式</a> | <a href="https://blog.csdn.net/wenqian1991/article/details/47957051">selfimpr1991</a> 
+ <a href="http://www.skywind.me/blog/guest">韦一笑</a> |  <a href="http://gameislife.info/">上下求索</a>
+ <a href="http://www.wjgbaby.com/page/2/">止戈 – 图形学相关</a></p>
+
+<h2 id="主题相关">主题相关</h2>
+
+<h3 id="技术">技术</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>博客地址</th>
+      <th>RSS地址</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://steinslab.io/">树莓派折腾</a></td>
+      <td><a href="https://steinslab.io/archives/1103">https://steinslab.io/archives/1103</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://blog.csdn.net/analogous_love/article/details/84338862">左雪菲 - 如何和hr谈薪资</a></td>
+      <td><a href="https://blog.csdn.net/analogous_love">https://blog.csdn.net/analogous_love</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://www.cnblogs.com/yanlingyin/archive/2012/04/17/2451717.html">语法分析器实现</a></td>
+      <td><a href="https://www.cnblogs.com">https://www.cnblogs.com</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://blog.csdn.net/gatieme/article/details/17952033">c++实现各种设计模式demo</a></td>
+      <td><a href="https://blog.csdn.net/gatieme">https://blog.csdn.net/gatieme</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://blog.csdn.net/tonychan129/article/details/8656509">大小端问题</a></td>
+      <td><a href="https://blog.csdn.net/tonychan129/article/details/8656509">https://blog.csdn.net/tonychan129/article/details/8656509</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://www.cnblogs.com/yangshaoning/archive/2012/03/18/cpp_smart_pointer.html">c++智能指针实现</a></td>
+      <td><a href="https://www.cnblogs.com/yangshaoning/archive/2012/03/18/cpp_smart_pointer.html">https://www.cnblogs.com/yangshaoning/archive/2012/03/18/cpp_smart_pointer.html</a></td>
+    </tr>
+    <tr>
+      <td><a href="http://www.cppblog.com/huaxiazhihuo/archive/2017/07/11/215082.html">c++博客</a></td>
+      <td><a href="http://www.cppblog.com/huaxiazhihuo/archive/2017/07/11/215082.html">http://www.cppblog.com/huaxiazhihuo/archive/2017/07/11/215082.html</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://blog.csdn.net/russell_tao/article/details/9950615">高性能网络编程3—-TCP消息的接收</a></td>
+      <td><a href="https://blog.csdn.net/russell_tao">https://blog.csdn.net/russell_tao</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://blog.yiz96.com/cpp-closure/">C++ Lambda闭包  </a></td>
+      <td><a href="https://blog.yiz96.com/cpp-closure/">https://blog.yiz96.com/cpp-closure/</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="多彩文化">多彩文化</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>博客地址</th>
+      <th>RSS地址</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="">德国自干五 - I like to take walks sometimes. </a></td>
+      <td><a href="https://christophrehage.com/">https://christophrehage.com/</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="游戏相关">游戏相关</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>博客地址</th>
+      <th>RSS地址</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="http://gameislife.info/">上下求索 - 游戏服务器开发系列文章</a></td>
+      <td><a href="http://gameislife.info/archives/299">http://gameislife.info/archives/299</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://www.lanindex.com/category/游戏服务器/">漫漫路</a></td>
+      <td><a href="https://www.lanindex.com/">https://www.lanindex.com/</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://www.gameenginebook.com/coursemat.html">Game engine architecture</a></td>
+      <td><a href="https://www.gameenginebook.com/coursemat.html">https://www.gameenginebook.com/coursemat.html</a></td>
+    </tr>
+    <tr>
+      <td><a href="http://number-none.com/blow/blog/">时空幻景作者</a></td>
+      <td><a href="http://number-none.com/blow/blog/">http://number-none.com/blow/blog/</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://www.jianshu.com/p/a89838ed61eb">skynet序列化</a></td>
+      <td><a href="https://www.jianshu.com/u/7cb29e2a3e5e">https://www.jianshu.com/u/7cb29e2a3e5e</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://wo1fsea.github.io/2016/08/21/A_Quick_Introduction_to_NavMesh/">NavMesh 生成算法</a></td>
+      <td><a href="https://wo1fsea.github.io/">https://wo1fsea.github.io/</a></td>
+    </tr>
+    <tr>
+      <td><a href="http://www.luzexi.com/">技术人生</a></td>
+      <td><a href="http://www.muchenhen.com/">生风之谷 – unity</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="other">other</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>博客地址</th>
+      <th>RSS地址</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://www.cs.usfca.edu/~galles/visualization/Algorithms.html">数据结构可视化 </a></td>
+      <td><a href="https://www.cs.usfca.edu/~galles/visualization/Algorithms.html">https://www.cs.usfca.edu/~galles/visualization/Algorithms.html</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://visualgo.net/en">数据结构可视化2</a></td>
+      <td><a href="https://visualgo.net/en">https://visualgo.net/en</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://www.byvoid.com/zht/blog/beancount-bookkeeping-4">复式记账</a></td>
+      <td><a href="https://www.byvoid.com/zht/blog/beancount-bookkeeping-4">https://www.byvoid.com/zht/blog/beancount-bookkeeping-4</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a href="https://github.com/RSS-Renaissance">RSS-Renaissance</a></p>
+
+
+
+                <hr style="visibility: hidden;">
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/%E5%8A%A8%E5%8A%A8%E6%89%8B/2019/09/10/vscode%E5%90%84%E7%A7%8D%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" data-toggle="tooltip" data-placement="top" title="各种语言vscode开发环境搭建-持续更新">
+                        Previous<br>
+                        <span>各种语言vscode开发环境搭建-持续更新</span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/%E8%AF%B4%E8%AF%B4%E8%AF%9D/2019/12/11/2019%E5%B9%B4%E6%80%BB%E7%BB%93/" data-toggle="tooltip" data-placement="top" title="2019年总结">
+                        Next<br>
+                        <span>2019年总结</span>
+                        </a>
+                    </li>
+                    
+                </ul>
+                <hr style="visibility: hidden;">
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+                
+            </div>  
+
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+
+<section>
+    
+        <hr class="hidden-sm hidden-xs">
+    
+    <h5><a href="/archive/">FEATURED TAGS</a></h5>
+    <div class="tags">
+        
+        
+        
+        </a>
+        
+        
+                <a data-sort="0022" 
+                    href="/archive/?tag=%E8%83%A1%E8%AF%8C%E8%AF%8C"
+                    title="胡诌诌"
+                    rel="3">胡诌诌</a>
+        
+                <a data-sort="0022" 
+                    href="/archive/?tag=tool"
+                    title="tool"
+                    rel="3">tool</a>
+        
+                <a data-sort="0023" 
+                    href="/archive/?tag=%E6%80%BB%E7%BB%93"
+                    title="总结"
+                    rel="2">总结</a>
+        
+                <a data-sort="0023" 
+                    href="/archive/?tag=idea"
+                    title="idea"
+                    rel="2">idea</a>
+        
+                <a data-sort="0023" 
+                    href="/archive/?tag=jekyll"
+                    title="jekyll"
+                    rel="2">jekyll</a>
+        
+                <a data-sort="0023" 
+                    href="/archive/?tag=writing"
+                    title="writing"
+                    rel="2">writing
+    </div>
+</section>
+
+
+                <!-- Friends Blog -->
+                
+<hr>
+<h5>FRIENDS</h5>
+<ul class="list-inline">
+  
+</ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- add support for mathjax by voleking-->
+
+
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "Q&H";
+    var disqus_identifier = "/%E5%8A%A8%E5%8A%A8%E6%89%8B/2019/09/27/博客记录";
+    var disqus_url = "https://7huang.github.io//%E5%8A%A8%E5%8A%A8%E6%89%8B/2019/09/27/%E5%8D%9A%E5%AE%A2%E8%AE%B0%E5%BD%95/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <!-- SNS Link -->
+                
+
+
+<ul class="list-inline text-center">
+
+
+  
+  
+  <li>
+    <a href="https://twitter.com/https://github.com/7huang">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  <li>
+    <a target="_blank" href="https://www.zhihu.com/people/xxxx">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa  fa-stack-1x fa-inverse">知</i>
+      </span>
+    </a>
+  </li>
+  
+  
+  <li>
+    <a target="_blank" href="http://weibo.com/xxxx">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  
+  <li>
+    <a target="_blank" href="https://github.com/7huang">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+</ul>
+
+                <p class="copyright text-muted">
+                    Copyright &copy; Q&H Blog 2023
+                    <br>
+                    Powered by <a href="https://7huang.github.io/">Hux Blog</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+<!-- Service Worker -->
+
+<script src="/js/snackbar.js "></script>
+<script src="/js/sw-registration.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+
+
+
+<!--fastClick.js -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+<!-- Side Catalog -->
+
+
+
+<!-- Multi-Lingual -->
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

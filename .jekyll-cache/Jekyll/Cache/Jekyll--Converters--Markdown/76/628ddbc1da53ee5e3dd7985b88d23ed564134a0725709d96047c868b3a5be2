@@ -1,0 +1,48 @@
+I"�<h2 id="go语言学习资料归纳">go语言学习资料归纳</h2>
+
+<h3 id="基础">基础</h3>
+<p>基础知识学习视频:<a href="https://github.com/Unknwon/go-fundamental-programming">无闻</a></p>
+
+<p>细化知识点实例:<a href="https://gobyexample.com/">gobyexample</a></p>
+
+<p>三方库讲解:<a href="https://github.com/Unknwon/go-rock-libraries-showcases">go libray</a></p>
+
+<p>go自习室：<a href="https://www.kancloud.cn/digest/batu-go/153539">资料</a></p>
+
+<h3 id="go-源码研究">go 源码研究:</h3>
+
+<p><a href="https://reading.developerlearning.cn/reading/#">go源码夜读</a></p>
+
+<p><a href="https://www.flysnow.org/categories/Golang/">飞雪无情</a></p>
+
+<p><a href="https://docs.kilvn.com/go-internals/ref2.html">go源码目录</a></p>
+
+<h3 id="go-特性研究">go 特性研究</h3>
+
+<p><a href="https://zhuanlan.zhihu.com/p/28381197">Goroutine</a></p>
+
+<p><a href="https://zhuanlan.zhihu.com/xiecode">go优秀文章集合</a></p>
+
+<p><a href="https://halfrost.com/tag/go/">go特性-杂</a></p>
+
+<h3 id="资料">资料</h3>
+<p><a href="/Users/hfy/Documents/2019书单">源码解析</a>  (只有在本地能够打开)</p>
+
+<p>觉得不错的与go相关的github项目列表:<a href="https://github.com/avelino/awesome-go#gui">awesome-go</a></p>
+
+<p>论坛，书籍，教程，知识图谱，职业信息，视频资料等:<a href="https://github.com/Unknwon/go-study-index">go学习资料大杂烩1</a>，<a href="https://github.com/developer-learning/learning-golang">go学习资料大杂烩2</a></p>
+
+<p>go命令讲解: <a href="https://wiki.jikexueyuan.com/project/go-command-tutorial/0.2.html">command</a></p>
+
+<h3 id="v语言">v语言</h3>
+
+<p><a href="https://vlang.io/">v</a></p>
+
+<h3 id="等待筛选">等待筛选</h3>
+<p><a href="http://www.cppblog.com/sunicdavy/category/21050.html">博客</a></p>
+
+<h3 id="other">other</h3>
+
+<p><a href="https://www.tutorialspoint.com/index.htm">tutorialspoint</a></p>
+
+:ET

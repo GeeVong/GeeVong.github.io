@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="关于程序与设计、黑客与画家 | 黄琪 Sever Engineer，GameDevper | 这里是 @Huangqi黄琪 的个人博客，找寻乐趣，做有趣的事，哈哈哈～">
+    <meta name="keywords"  content=" 黄琪 Sever Engineer，GameDevper, Huang Blog, 博客, 个人网站, 游戏开发, c++, goland, lua, 服务器">
+    <meta name="theme-color" content="#000000">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="2019年总结 - Q&H's Blog">
+    
+    <meta property="og:type" content="article">
+    <meta property="og:description" content="2019你在干啥
+">
+    
+    <meta property="article:published_time" content="2019-12-11T00:00:00Z">
+    
+    
+    
+    <meta property="article:tag" content="writing">
+    
+    
+    <meta property="og:image" content="https://7huang.github.io//img/avatar-me-ny.jpg">
+    <meta property="og:url" content="https://7huang.github.io//%E8%AF%B4%E8%AF%B4%E8%AF%9D/2019/12/11/2019%E5%B9%B4%E6%80%BB%E7%BB%93/">
+    <meta property="og:site_name" content="Q&H's Blog">
+    
+    <title>2019年总结 - Q&H's Blog</title>
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/pwa/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://7huang.github.io//%E8%AF%B4%E8%AF%B4%E8%AF%9D/2019/12/11/2019%E5%B9%B4%E6%80%BB%E7%BB%93/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Q&H Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="/archive/">Archive</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                    <li>
+                        <a href="/portfolio/">Portfolio</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    var __HuxNav__ = {
+        close: function(){
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        },
+        open: function(){
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+
+    // Bind Event
+    $toggle.addEventListener('click', function(e){
+        if ($navbar.className.indexOf('in') > 0) {
+            __HuxNav__.close()
+        }else{
+            __HuxNav__.open()
+        }
+    })
+
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from 
+     * $toggle/$collapse will break global delegation.
+     * 
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close HuxNav.  
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function(e){
+        if(e.target == $toggle) return;
+        if(e.target.className == 'icon-bar') return;
+        __HuxNav__.close();
+    })
+</script>
+
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/home-bg.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+
+
+
+<style type="text/css">
+    header.intro-header{
+        position: relative;
+        background-image: url('/img/home-bg.jpg');
+        background: ;
+    }
+
+    
+</style>
+
+<header class="intro-header style-text" >
+
+    <div class="header-mask"></div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/archive/?tag=writing" title="writing">writing</a>
+                        
+                    </div>
+                    <h1>2019年总结</h1>
+                    
+                    <h2 class="subheading"></h2>
+                    <span class="meta">Posted by Q&H Blog on December 11, 2019</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <!-- Multi-Lingual -->
+                
+
+				<h2 id="2019你在干啥">2019你在干啥</h2>
+
+<p>看有道云笔记，貌似2019年干了很多事情嘛 :)</p>
+
+<h2 id="生活">生活</h2>
+
+<p>新认识了很多圈内朋友，也结识了一下其他行业的朋友，机遇与挑战皆有，两次改变职业走向的机遇，切身感受到机会只留给有准备的人，不知道自己选择是否正确。真正体会到工作和生活平衡的难度，国庆回了一趟老家，老妈的白头发已经多到数不清了，父亲苍老了一圈，说现在爬6楼都有点气喘了。犹豫过是否回老家，但还是选择了前行。</p>
+
+<p><img src="http://q2bv7uhmc.bkt.clouddn.com/5E620522-90D1-4AC6-967D-19D1B33A1EFD.png" alt="" /></p>
+
+<h2 id="工作">工作</h2>
+
+<p>年初砍项目裁员，公司非常冷酷无情，也见识过什么叫恶心上司，删库跑路，还让我背锅，h5项目胎死腹中。</p>
+
+<p>修养了两个月，思考了自己的技术发展路线，明确了往底层研究的方向。</p>
+
+<p>转go， 没有选择接着做arpg,而是回合制h5，虽然我一直都是以项目为先决条件找工作的，但是分布式微服务架构项目还是对我有一定的吸引力的。</p>
+
+<p>业务上没有什么困扰的，对于架构设计上的一些问题存在很多困惑。</p>
+
+<p>察觉到自己基础不扎实的问题，积累了很多学习资料，csapp要好好啃一下，接下来可以好好开干一番了。</p>
+
+<p><img src="http://q2bv7uhmc.bkt.clouddn.com/WechatIMG13.jpg" alt="" /></p>
+
+<h2 id="技术研究">技术研究</h2>
+
+<p>相对于去年懵懂，今年对行业，以及服务器开发方面的认知了解更多了。总体来说还是一个积累，探索过程，对于很多东西，并没有深入去研究。语言路线选择了goland，放弃了c++。</p>
+
+<p>现在项目架构用开源项目go-micro，分布式微服务架构，新机遇新挑战</p>
+
+<p>探索过程中，发现很多东西需要学习补充，补充过程中发现很多基础知识需要回顾。所以急不来，需要停下来补一补基础，还当年大学欠下的债。</p>
+
+<p>你想要什么，你就会去探索与之相关的东西，过程中会发现陌生概念，陌生概念会引出更多陌生概念。你会收集很多资料，后面，你会遗弃很多资料，就剩下那么一些。</p>
+
+<p>过程中，你学会了分析问题，解决问题，总结归纳，东西多了，会尝试清理，归档，总结。</p>
+
+<p><img src="http://q2bv7uhmc.bkt.clouddn.com/DSC01273.jpg" alt="" /></p>
+
+<h2 id="摄影徒步">摄影徒步</h2>
+
+<p>偶然的机会，出去徒步了一番，一发不可收拾。</p>
+
+<p>996很难，工作之余，外出走一走。</p>
+
+<p>踩着林间落叶，沙沙作响。</p>
+
+<p>行走山间，听清脆的流水声，很舒服。</p>
+
+<p><img src="http://q2bv7uhmc.bkt.clouddn.com/DSC01251.jpg" alt="" /></p>
+
+
+
+                <hr style="visibility: hidden;">
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/%E5%8A%A8%E5%8A%A8%E6%89%8B/2019/09/27/%E5%8D%9A%E5%AE%A2%E8%AE%B0%E5%BD%95/" data-toggle="tooltip" data-placement="top" title="优质技术博客整理~持续更新">
+                        Previous<br>
+                        <span>优质技术博客整理~持续更新</span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/%E6%95%A3%E6%95%A3%E5%BF%83/2019/12/11/hiking3/" data-toggle="tooltip" data-placement="top" title="Hiking">
+                        Next<br>
+                        <span>Hiking</span>
+                        </a>
+                    </li>
+                    
+                </ul>
+                <hr style="visibility: hidden;">
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+                
+            </div>  
+
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+
+<section>
+    
+        <hr class="hidden-sm hidden-xs">
+    
+    <h5><a href="/archive/">FEATURED TAGS</a></h5>
+    <div class="tags">
+        
+        
+        
+        </a>
+        
+        
+                <a data-sort="0022" 
+                    href="/archive/?tag=%E8%83%A1%E8%AF%8C%E8%AF%8C"
+                    title="胡诌诌"
+                    rel="3">胡诌诌</a>
+        
+                <a data-sort="0022" 
+                    href="/archive/?tag=tool"
+                    title="tool"
+                    rel="3">tool</a>
+        
+                <a data-sort="0023" 
+                    href="/archive/?tag=%E6%80%BB%E7%BB%93"
+                    title="总结"
+                    rel="2">总结</a>
+        
+                <a data-sort="0023" 
+                    href="/archive/?tag=idea"
+                    title="idea"
+                    rel="2">idea</a>
+        
+                <a data-sort="0023" 
+                    href="/archive/?tag=jekyll"
+                    title="jekyll"
+                    rel="2">jekyll</a>
+        
+                <a data-sort="0023" 
+                    href="/archive/?tag=writing"
+                    title="writing"
+                    rel="2">writing
+    </div>
+</section>
+
+
+                <!-- Friends Blog -->
+                
+<hr>
+<h5>FRIENDS</h5>
+<ul class="list-inline">
+  
+</ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- add support for mathjax by voleking-->
+
+
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "Q&H";
+    var disqus_identifier = "/%E8%AF%B4%E8%AF%B4%E8%AF%9D/2019/12/11/2019年总结";
+    var disqus_url = "https://7huang.github.io//%E8%AF%B4%E8%AF%B4%E8%AF%9D/2019/12/11/2019%E5%B9%B4%E6%80%BB%E7%BB%93/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <!-- SNS Link -->
+                
+
+
+<ul class="list-inline text-center">
+
+
+  
+  
+  <li>
+    <a href="https://twitter.com/https://github.com/7huang">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  <li>
+    <a target="_blank" href="https://www.zhihu.com/people/xxxx">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa  fa-stack-1x fa-inverse">知</i>
+      </span>
+    </a>
+  </li>
+  
+  
+  <li>
+    <a target="_blank" href="http://weibo.com/xxxx">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  
+  <li>
+    <a target="_blank" href="https://github.com/7huang">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+</ul>
+
+                <p class="copyright text-muted">
+                    Copyright &copy; Q&H Blog 2023
+                    <br>
+                    Powered by <a href="https://7huang.github.io/">Hux Blog</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+<!-- Service Worker -->
+
+<script src="/js/snackbar.js "></script>
+<script src="/js/sw-registration.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+
+
+
+<!--fastClick.js -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+<!-- Side Catalog -->
+
+
+
+<!-- Multi-Lingual -->
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

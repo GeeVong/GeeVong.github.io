@@ -1,0 +1,111 @@
+I"i<p>go module 问题：本文记录go module 使用过程中遇到的问题
+资料参考
+https://eddycjy.com/posts/go/go-moduels/2020-02-28-go-modules/</p>
+
+<p>####本文要点：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre>1.从0开始搭建go开发环境
+2.go项目依赖包管理实践操作--使用module
+3.项目托管git实践操作
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h5 id="1从0开始搭建go开发环境">1.从0开始搭建go开发环境</h5>
+
+<p>1.需要一个go sdk 包,并且解压 <a href="https://golang.org/dl/">go1.14.2.darwin-amd64.tar.gz</a></p>
+
+<ol>
+  <li>编辑 .envrc 配置gopath: export GOPATH=$(pwd)/.go</li>
+</ol>
+
+<h5 id="2go项目依赖包管理实践操作使用module">2.go项目依赖包管理实践操作–使用module</h5>
+
+<p>这个是时候已经可以进行开发了，引入第三方库。</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="rouge-code"><pre><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+	<span class="s">"fmt"</span>
+	<span class="s">"github.com/7huang/go-mudule/testmod"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">testmod</span><span class="o">.</span><span class="n">SayHello</span><span class="p">(</span><span class="s">"99"</span><span class="p">))</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<ol>
+  <li>go mod init  gomodule  生成go.mod 文件</li>
+  <li>go download</li>
+  <li>go vender 处理报红问题</li>
+</ol>
+
+<p>Go modules 命令：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>命令</th>
+      <th>作用</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>go mod init</td>
+      <td>生成 go.mod 文件</td>
+    </tr>
+    <tr>
+      <td>go mod download</td>
+      <td>下载 go.mod 文件中指明的所有依赖</td>
+    </tr>
+    <tr>
+      <td>go mod tidy</td>
+      <td>整理现有的依赖</td>
+    </tr>
+    <tr>
+      <td>go mod graph</td>
+      <td>查看现有的依赖结构</td>
+    </tr>
+    <tr>
+      <td>go mod edit</td>
+      <td>编辑 go.mod 文件</td>
+    </tr>
+    <tr>
+      <td>go mod vendor</td>
+      <td>导出项目所有的依赖到 vendor 目录</td>
+    </tr>
+    <tr>
+      <td>go mod verify</td>
+      <td>校验一个模块是否被篡改过</td>
+    </tr>
+    <tr>
+      <td>go mod why</td>
+      <td>查看为什么需要依赖某模块</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="遇到问题">遇到问题</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>1.倒入外部依赖包之后，ide还是存在标红问题
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><img src="/Users/hq/Library/Application Support/typora-user-images/image-20200702212223938.png" alt="image-20200702212223938" /></p>
+
+<p>实际上该外部依赖包已经倒入。因为程序已经可以编译通过。</p>
+
+<p>解决方式： go mod vender。（有点疑问）</p>
+:ET

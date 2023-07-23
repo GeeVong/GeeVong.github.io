@@ -1,0 +1,134 @@
+I"g<p>下面其实是memmove的实现</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre></td><td class="rouge-code"><pre>   <span class="kt">void</span> <span class="o">*</span> <span class="nf">memmove</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span> <span class="n">src</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">count</span><span class="p">)</span>
+       <span class="p">{</span>
+               <span class="kt">void</span> <span class="o">*</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">dst</span><span class="p">;</span>
+
+               <span class="k">if</span> <span class="p">(</span><span class="n">dst</span> <span class="o">&lt;=</span> <span class="n">src</span> <span class="o">||</span> <span class="n">dst</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">src</span> <span class="o">+</span> <span class="n">count</span><span class="p">))</span> <span class="p">{</span>
+                       <span class="cm">/*
+                        * Non-Overlapping Buffers
+                        * copy from lower addresses to higher addresses
+                        */</span>
+                       <span class="k">while</span> <span class="p">(</span><span class="n">count</span><span class="o">--</span><span class="p">)</span>
+                               <span class="o">*</span><span class="n">dst</span><span class="o">++</span> <span class="o">=</span> <span class="o">*</span><span class="n">src</span><span class="o">++</span><span class="p">;</span>
+                       <span class="p">}</span>
+               <span class="k">else</span> <span class="p">{</span>
+                       <span class="cm">/*
+                        * Overlapping Buffers
+                        * copy from higher addresses to lower addresses
+                        */</span>
+                       <span class="n">dst</span> <span class="o">+=</span> <span class="n">count</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+                       <span class="n">src</span> <span class="o">+=</span> <span class="n">count</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+
+                       <span class="k">while</span> <span class="p">(</span><span class="n">count</span><span class="o">--</span><span class="p">)</span>
+                               <span class="o">*</span><span class="n">dst</span><span class="o">--</span> <span class="o">=</span> <span class="o">*</span><span class="n">src</span><span class="o">--</span><span class="p">;</span>
+                       <span class="p">}</span>
+
+               <span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
+       <span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>下面是memcpy实现：</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="rouge-code"><pre>       <span class="kt">void</span> <span class="o">*</span> <span class="nf">memcpy</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span> <span class="n">src</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">count</span><span class="p">)</span>
+       <span class="p">{</span>
+               <span class="kt">void</span> <span class="o">*</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">dst</span><span class="p">;</span>
+
+               <span class="cm">/*
+                * copy from lower addresses to higher addresses
+                */</span>
+               <span class="k">while</span> <span class="p">(</span><span class="n">count</span><span class="o">--</span><span class="p">)</span>
+                       <span class="o">*</span><span class="n">dst</span><span class="o">++</span> <span class="o">=</span> <span class="o">*</span><span class="n">src</span><span class="o">++</span><span class="p">;</span>
+
+               <span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
+       <span class="p">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><strong>这里发一个问</strong>：array 底层是怎么实现打的,为什么对b 使用操作符是计算不出来的，对c使用操作符(就是计算信封包裹的过程) 那个宏通过计算二级指针直接可以计算出数组大小.</p>
+
+<p><strong>计算信封包裹:</strong> 你写了一封信，用信封装好了，让后过几天又写了一封，用信封装好了，然后你用一个包裹。</p>
+
+<pre><code class="language-C++">    int *b=(int *)malloc(10*sizeof(int));
+    int c[10] = {0};
+</code></pre>
+
+<p><strong>这里会涉及到一个sizeof 的问题:</strong>
+size意义是<a href="http://www.cplusplus.com/reference/cstring/memcpy/">cppreference</a>：“Number of bytes to copy.
+size_t is an unsigned integral type.”</p>
+
+<p>顺便说一下，template &lt; class T, size_t N &gt; 和 typeid 这个函数可以找到解答。</p>
+
+<h2 id="cpp-中内存分配方式参考资料">cpp 中内存分配方式—<a href="https://chenqx.github.io/2014/09/25/Cpp-Memory-Management/">参考资料</a></h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="rouge-code"><pre>　在C++中，内存分成5个区，他们分别是堆、栈、自由存储区、全局/静态存储区和常量存储区。
+　　栈：在执行函数时，函数内局部变量的存储单元都可以在栈上创建，函数执行结束时这些存储单元自动被释放。栈内存分配运算内置于处理器的指令集中，效率很高，但是分配的内存容量有限。里面的变量通常是局部变量、函数参数等
+　　
+　　堆：就是那些由 new分配的内存块，他们的释放编译器不去管，由我们的应用程序去控制，一般一个new就要对应一个 delete。如果程序员没有释放掉，那么在程序结束后，操作系统会自动回收。
+　　
+　　自由存储区：就是那些由malloc等分配的内存块，他和堆是十分相似的，不过它是用free来结束自己的生命的
+　　
+　　全局/静态存储区：全局变量和静态变量被分配到同一块内存中，在以前的C语言中，全局变量又分为初始化的和未初始化的，在C++里面没有这个区分了，他们共同占用同一块内存区。
+　　
+　　常量存储区：这是一块比较特殊的存储区，他们里面存放的是常量，不允许修改。
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="极端情况下的问题">极端情况下的问题</h2>
+<p><img src="https://raw.githubusercontent.com/7huang/Utility/master/img-source/memcpy.png" alt="" /></p>
+
+<p><strong>目前状态</strong>：无法理解</p>
+
+<h2 id="memcpy-安全问题">memcpy 安全问题</h2>
+
+<p>问题1：size 问题，访问越界</p>
+
+<p>问题2：有关于内存覆盖问题</p>
+
+:ET

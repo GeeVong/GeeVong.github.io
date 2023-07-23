@@ -1,0 +1,255 @@
+I"�1<h1 id="充值系统设计">充值系统设计</h1>
+
+<h2 id="写在前">写在前</h2>
+
+<p>下面是王者荣耀的充值系统，这是对于玩家可见部分，玩家点击购买，iso弹窗显示指纹支付，指纹验证成功，完成订单支付，客户端收到点券，去下支付，提示支付失败。那么当中到底是怎么完成这一整套流程的呢？下面就来探究</p>
+
+<p><img src="https://raw.githubusercontent.com/seven1H/pic/master/3ACB7F4E-40AD-4B24-BA76-34F9A4DC9A6E.png" alt="img" /></p>
+
+<h2 id="流程概述">流程概述</h2>
+
+<ul>
+  <li>充值系统存在交互方：
+    <ul>
+      <li>客户端 Client</li>
+      <li>游戏服务器 GameServer</li>
+      <li>平台 Third-Sdk （如果是多方发行，平台负责集成多渠道）</li>
+    </ul>
+  </li>
+  <li>流程图</li>
+</ul>
+
+<p><img src="https://raw.githubusercontent.com/seven1H/pic/master/image-20200925152926833.png" alt="image-20200925153637345" /></p>
+
+<ul>
+  <li>流程概述：</li>
+</ul>
+
+<p>​	客户端购买商品-&gt;游戏服务器校验-&gt;游戏生成订单-&gt;下发给客户端-&gt;客户端拉起订单-&gt;支付-&gt;SDK平台通知游戏服务器下单成功-&gt;游戏服务器发货，订单完成</p>
+
+<ul>
+  <li>具体操作流程：
+    <ul>
+      <li>订单请求
+        <ul>
+          <li>客户端<strong>Client-001</strong> 登录到游戏，进入充值系统，发起购买请求 (玩家点击了充值648按钮)</li>
+        </ul>
+      </li>
+      <li>订单
+        <ul>
+          <li>上面操作完成之后，会在服务端生成一个<strong>充值订单</strong>（服务器订单）</li>
+        </ul>
+      </li>
+      <li>玩家支付
+        <ul>
+          <li>客户端接收服务器返回的订单信息或者去服务器拉取订单信息（订单支付时间cd）， 转到平台，平台识别属于哪个渠道，调用对应渠道sdk，进行支付, 用户完成订单支付，<strong>平台订单</strong>生成。</li>
+        </ul>
+      </li>
+      <li>服务器校验，发货。
+        <ul>
+          <li>平台通过客户端带过来的订单信息，回调到服务器( 如何实现回调?)，进行校验，无误之后服务器发货给玩家</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="对于研发端我们需要关注的点">对于研发端，我们需要关注的点：</h3>
+
+<ul>
+  <li>客户端交互
+	- 下单api：购买处理，gen_order,update 角色充值信息，返回订单信息给client
+	- 发货api：推送</li>
+  <li>平台回调处理：
+	- http？？？</li>
+  <li>数据状态处理
+	- 玩家充值订单管理
+	- 玩家充值数据管理</li>
+</ul>
+
+<h2 id="异常处理">异常处理</h2>
+
+<p>系统运行过程中可能存在的问题</p>
+
+<ul>
+  <li>支付订单失败如何处理？</li>
+  <li>
+    <p>购买限购订单，下单支付未发货，多次支付问题（充值，支付之后没有立即到账，可能要半天才到账）解决方式，对限购物品进行加锁，订单未完成，不允许再次购买</p>
+  </li>
+  <li>如果充值过程中，关服了
+    <ul>
+      <li>服务器关服了，就是充值后台无法推送订单过来了，所以充值后台再推送失败后，会不断重试</li>
+    </ul>
+  </li>
+  <li>如果充值过程中，角色不在线了
+    <ul>
+      <li>角色不在线，是推送成功了，但是角色数据不在线，所以先处理充值订单状态，然后再上线的时候再发货</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="充值系统数据库表设计">充值系统数据库表设计</h2>
+
+<ul>
+  <li>充值订单数据结构： 对订单的一些信息进行记录</li>
+</ul>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td><td class="rouge-code"><pre><span class="k">const</span> <span class="p">(</span>
+	<span class="n">RoleRechargeOrder_OrderType_Cash</span>    <span class="o">=</span> <span class="s">"cash"</span>    <span class="c">// 现金充值</span>
+	<span class="n">RoleRechargeOrder_OrderType_Virtual</span> <span class="o">=</span> <span class="s">"virtual"</span> <span class="c">// 虚拟充值</span>
+<span class="p">)</span>
+
+<span class="c">// 角色充值订单</span>
+<span class="k">type</span> <span class="n">RoleRechargeOrder</span> <span class="k">struct</span> <span class="p">{</span>
+	<span class="n">OrderId</span>    <span class="kt">string</span>   <span class="c">// 订单ID</span>
+	<span class="n">OrderType</span>  <span class="kt">string</span>   <span class="c">// 订单类型. cash</span>
+	<span class="n">RoleId</span>     <span class="kt">int64</span>    <span class="c">// 角色ID</span>
+	<span class="n">TickerId</span>   <span class="kt">string</span>   <span class="c">// 流水号</span>
+	<span class="n">ChOrderId</span>  <span class="kt">string</span>   <span class="c">// 渠道订单ID</span>
+	<span class="n">GoodsType</span>  <span class="kt">int32</span>    <span class="c">// 购买礼包ID</span>
+	<span class="n">GoodsId</span>    <span class="kt">int32</span>    <span class="c">// 购买礼包ID</span>
+	<span class="n">Price</span>      <span class="kt">int32</span>    <span class="c">// 订单价格</span>
+	<span class="n">Amount</span>     <span class="kt">float64</span>  <span class="c">// 支付金额</span>
+	<span class="n">GameKey</span>    <span class="kt">string</span>   <span class="c">// 游戏标识</span>
+	<span class="n">Channel</span>    <span class="kt">string</span>   <span class="c">// 渠道标识</span>
+	<span class="n">Uid</span>        <span class="kt">string</span>   <span class="c">// 渠道账号唯一标识</span>
+	<span class="n">FinishTime</span> <span class="kt">int64</span>    <span class="c">// 订单发货时间</span>
+	<span class="n">PayTime</span>    <span class="kt">int64</span>    <span class="c">// 订单支付时间</span>
+	<span class="n">CreateTime</span> <span class="kt">int64</span>    <span class="c">// 订单创建时间</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<ul>
+  <li>角色充值信息</li>
+</ul>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+</pre></td><td class="rouge-code"><pre>
+<span class="c">// 角色充值信息</span>
+<span class="k">type</span> <span class="n">RoleRechargeInfo</span> <span class="k">struct</span> <span class="p">{</span>
+	<span class="n">RoleId</span>        <span class="kt">int64</span>
+	<span class="n">FirstPay</span>      <span class="kt">int64</span>                          <span class="c">// 首充时间</span>
+	<span class="n">FirstPayAward</span> <span class="kt">int64</span>                          <span class="c">// 首充奖励领取时间</span>
+	<span class="n">TotalAmount</span>   <span class="kt">float64</span>                        <span class="c">// 充值总额</span>
+	<span class="n">TotalAwards</span>   <span class="p">[]</span><span class="kt">int32</span>                        <span class="c">// 已领取的累充奖励</span>
+	<span class="n">BuyQualify</span>    <span class="k">map</span><span class="p">[</span><span class="kt">int32</span><span class="p">]</span><span class="kt">int64</span>                <span class="c">// 礼包购买资格, map[礼包ID]生效开始时间</span>
+	<span class="n">BuyGift</span>       <span class="k">map</span><span class="p">[</span><span class="kt">int32</span><span class="p">]</span><span class="o">*</span><span class="n">RechargeGift</span>        <span class="c">// 礼包购买信息</span>
+	<span class="n">GrowGifts</span>     <span class="k">map</span><span class="p">[</span><span class="kt">int32</span><span class="p">]</span><span class="o">*</span><span class="n">RechargeGrowGift</span>    <span class="c">// 成长礼包状态</span>
+	<span class="n">MonthCards</span>    <span class="k">map</span><span class="p">[</span><span class="kt">int32</span><span class="p">]</span><span class="o">*</span><span class="n">RechargeMonthCard</span>   <span class="c">// 月卡状态</span>
+	<span class="n">VipTransform</span>  <span class="kt">bool</span>                           <span class="c">// 是否转换VIP经验</span>
+	<span class="n">VipAwards</span>     <span class="k">map</span><span class="p">[</span><span class="kt">int32</span><span class="p">]</span><span class="kt">int64</span>                <span class="c">// VIP奖励礼包</span>
+	<span class="n">PassCard</span>      <span class="k">map</span><span class="p">[</span><span class="kt">int32</span><span class="p">]</span><span class="o">*</span><span class="n">RechargePassCard</span>    <span class="c">// 通行证</span>
+<span class="p">}</span>
+
+<span class="c">// 充值礼包购买记录</span>
+<span class="k">type</span> <span class="n">RechargeGift</span> <span class="k">struct</span> <span class="p">{</span>
+	<span class="n">Id</span>    <span class="kt">int32</span>   <span class="c">// 礼包Id</span>
+	<span class="n">Type</span>  <span class="kt">int32</span>   <span class="c">// 礼包类型 (可以定义礼包类型)</span>
+	<span class="n">Total</span> <span class="kt">int32</span>    <span class="c">// 总累计购买次数</span>
+	<span class="n">Num</span>   <span class="kt">int32</span>   <span class="c">// 本期购买次数</span>
+	<span class="n">Time</span>  <span class="kt">int64</span>   <span class="c">// 本期时间戳</span>
+<span class="p">}</span>
+
+<span class="c">// 成长礼包状态</span>
+<span class="k">type</span> <span class="n">RechargeGrowGift</span> <span class="k">struct</span> <span class="p">{</span>
+	<span class="n">Id</span>      <span class="kt">int32</span>             <span class="c">// 成长礼包ID</span>
+	<span class="n">BuyTime</span> <span class="kt">int64</span>             <span class="c">// 购买时间</span>
+	<span class="n">Stage</span>   <span class="kt">int32</span>             <span class="c">// 当前阶段</span>
+	<span class="n">Awards</span>  <span class="k">map</span><span class="p">[</span><span class="kt">int32</span><span class="p">]</span><span class="kt">int64</span>   <span class="c">// 领取记录 map&lt;任务ID, 领取时间&gt;</span>
+<span class="p">}</span>
+
+<span class="c">// 月卡状态</span>
+<span class="k">type</span> <span class="n">RechargeMonthCard</span> <span class="k">struct</span> <span class="p">{</span>
+	<span class="n">Id</span>         <span class="kt">int32</span>            <span class="c">// 月卡ID</span>
+	<span class="n">BuyTime</span>    <span class="kt">int64</span>            <span class="c">// 购买时间</span>
+	<span class="n">ExpireTime</span> <span class="kt">int64</span>            <span class="c">// 到期时间</span>
+	<span class="n">Awards</span>     <span class="k">map</span><span class="p">[</span><span class="kt">int64</span><span class="p">]</span><span class="kt">int64</span>  <span class="c">// 奖励领取</span>
+	<span class="n">VipAwards</span>  <span class="k">map</span><span class="p">[</span><span class="kt">int64</span><span class="p">]</span><span class="kt">int64</span>  <span class="c">// VIP奖励</span>
+<span class="p">}</span>
+
+<span class="c">// 充值令牌信息</span>
+<span class="k">type</span> <span class="n">RechargePassCard</span> <span class="k">struct</span> <span class="p">{</span>
+	<span class="n">BuyTime</span>   <span class="kt">int64</span>             <span class="c">// 购买时间</span>
+	<span class="n">StartTime</span> <span class="kt">int64</span>             <span class="c">// 开始时间</span>
+	<span class="n">Exp</span>       <span class="kt">int32</span>             <span class="c">// 当前经验</span>
+	<span class="n">Level</span>     <span class="kt">int32</span>             <span class="c">// 当前等级</span>
+	<span class="n">Awards</span>    <span class="k">map</span><span class="p">[</span><span class="kt">int32</span><span class="p">]</span><span class="kt">int64</span>   <span class="c">// 奖励领取</span>
+	<span class="n">AdvAwards</span> <span class="k">map</span><span class="p">[</span><span class="kt">int32</span><span class="p">]</span><span class="kt">int64</span>   <span class="c">// 高级奖励</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+:ET

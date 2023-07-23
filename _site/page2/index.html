@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="关于程序与设计、黑客与画家 | 黄琪 Sever Engineer，GameDevper | 这里是 @Huangqi黄琪 的个人博客，找寻乐趣，做有趣的事，哈哈哈～">
+    <meta name="keywords"  content=" 黄琪 Sever Engineer，GameDevper, Huang Blog, 博客, 个人网站, 游戏开发, c++, goland, lua, 服务器">
+    <meta name="theme-color" content="#000000">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Q&H's Blog">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="Find what you wanted">
+    
+    <meta property="og:image" content="https://7huang.github.io//img/avatar-me-ny.jpg">
+    <meta property="og:url" content="https://7huang.github.io//page2/">
+    <meta property="og:site_name" content="Q&H's Blog">
+    
+    <title>Q&H's Blog</title>
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/pwa/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://7huang.github.io//page2/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Q&H Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="/archive/">Archive</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                    <li>
+                        <a href="/portfolio/">Portfolio</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    var __HuxNav__ = {
+        close: function(){
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        },
+        open: function(){
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+
+    // Bind Event
+    $toggle.addEventListener('click', function(e){
+        if ($navbar.className.indexOf('in') > 0) {
+            __HuxNav__.close()
+        }else{
+            __HuxNav__.open()
+        }
+    })
+
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from 
+     * $toggle/$collapse will break global delegation.
+     * 
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close HuxNav.  
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function(e){
+        if(e.target == $toggle) return;
+        if(e.target.className == 'icon-bar') return;
+        __HuxNav__.close();
+    })
+</script>
+
+
+    <!-- Page Header -->
+
+
+
+
+
+
+
+<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        
+        <div class="site-heading">
+        
+          <h1>Q&H Blog</h1>
+          <span class="subheading">Find what you wanted</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+<!-- Main Content -->
+<div class="container">
+	<div class="row">
+        
+
+<!-- USE SIDEBAR -->
+    <!-- PostList Container -->
+    		<div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                postlist-container
+            ">
+    			
+<div class="post-preview">
+    <a href="/%E5%8A%A8%E5%8A%A8%E6%89%8B/2019/09/04/compiler-tool-using/">
+        <h2 class="post-title">
+            编译工具使用
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                使用gcc/g++编译代码
+
+1
+2
+3
+4
+5
+6
+#include&lt;iostream&gt;
+using namespace std;
+int main(){
+  cout&lt;&lt;"hello world"&lt;&lt;endl;
+  return 0;
+}
+
+
+1
+hqdeMac-mini:example1 hq$ g++ hello.cpp -o hello
+
+
+1
+...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Q&H Blog on September 4, 2019
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/%E5%8A%A8%E5%8A%A8%E6%89%8B/2019/07/03/go-source/">
+        <h2 class="post-title">
+            go 学习资料
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                go语言学习资料归纳
+
+基础
+基础知识学习视频:无闻
+
+细化知识点实例:gobyexample
+
+三方库讲解:go libray
+
+go自习室：资料
+
+go 源码研究:
+
+go源码夜读
+
+飞雪无情
+
+go源码目录
+
+go 特性研究
+
+Goroutine
+
+go优秀文章集合
+
+go特性-杂
+
+资料
+源码解析  (只有在本地能够打开)
+
+觉得不错的与go相关的github项目列表:awesome...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Q&H Blog on July 3, 2019
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/%E5%8A%A8%E5%8A%A8%E6%89%8B/2019/05/20/reading-plan/">
+        <h2 class="post-title">
+            Reading plan
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                2019阅读计划，粗略完成csapp模糊内容记忆阅读
+
+
+
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Q&H Blog on May 20, 2019
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/%E5%8A%A8%E5%8A%A8%E8%84%91/2019/03/20/about_free/">
+        <h2 class="post-title">
+            自由的方向
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                曾经听言，真正的财务自由是时间上的自由。也曾听言，真正的财富是时间。
+
+自由，财富，时间，生活之感悟？
+财富，古之谓金银，现在更多的称为钱，货币或者流动性。
+时间即是生活。
+自由是按照自己喜欢的方式去浪费时间。
+
+生活本就是为眼前的苟且(赚钱)，人人都在为材米油盐操劳。职业上能够找到乐趣已是万幸，然尚幸，生活中亦有温暖可寻；生活是一个很美的词，而有时间把生活过好是一件挺难的事情；生活需要财富...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Q&H Blog on March 20, 2019
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/%E5%8A%A8%E5%8A%A8%E6%89%8B/2019/02/27/base-review/">
+        <h2 class="post-title">
+            基础知识学习
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                
+  原文链接
+  面试相关
+
+
+原文链接
+
+这种写博客的方式虽然偷懒，省去排版的问题，但是可以快速迭代热更呀，还可以控制文章显示。觉得自己有点机制:)
+
+1.虚函数原理：
+
+2.运算符  ++i / i++ , 优先级问题以及其扩展。
+
+3.汇编
+
+4.堆栈内存模型：
+
+5.红黑树：
+
+6.list linux的不同实现方式
+
+7.字符串相关:字符串拷贝/string 类实现:
+
+8.cp...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Q&H Blog on February 27, 2019
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/%E5%8A%A8%E5%8A%A8%E6%89%8B/2019/01/18/svn-server-construct/">
+        <h2 class="post-title">
+            svn服务器搭建遇到的坑
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                具体教程，已有轮子
+
+  https://blog.csdn.net/kongxingxing/article/details/77192417
+
+
+遇一号坑
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Q&H Blog on January 18, 2019
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/%E5%8A%A8%E5%8A%A8%E8%84%91/2018/12/27/multi-process/">
+        <h2 class="post-title">
+            线程进程基本概念
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                一个有意思的理解方式
+好奇，进程，线程，时间片，时序等抽象系统级概念。有幸拜读国外友人所书，斗胆简译之。
+
+进程犹如房子：
+房子乃容器也，包括地板，卧室，厨房，卫生间等等。实际上它并不会积极的有任何行为。
+
+线程犹如住在里面的人：
+作为主动的个体，我们人会使用房子里面的东西，卧室睡觉，客厅看电视，
+聊天喝酒等等。
+
+单线程犹如独居：
+独居是一个很好的比喻，你，都可以，在你的房子里面为所欲为，...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Q&H Blog on December 27, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/%E5%8A%A8%E5%8A%A8%E6%89%8B/2018/08/25/mcpy/">
+        <h2 class="post-title">
+            memcpy
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                下面其实是memmove的实现
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+   void * memmove(void * dst, void * src, size_t count)
+       {
+               void * ret = dst;
+
+             ...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Q&H Blog on August 25, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/%E5%8A%A8%E5%8A%A8%E6%89%8B/2018/05/10/templeprogramming/">
+        <h2 class="post-title">
+            模板元编程
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                
+  动手实践模板
+
+
+动手实践模板
+
+C++ 模板可以做以下事情：编译期数值计算、类型计算、代码计算（如循环展开），其中数值计算实际不太有意义，
+而类型计算和代码计算可以使得代码更加通用，更加易用，性能更好（也更难阅读，更难调试，有时也会有代码膨胀问题）
+
+源码：
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Q&H Blog on May 10, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/%E5%8A%A8%E5%8A%A8%E6%89%8B/2018/03/15/bitcalcu/">
+        <h2 class="post-title">
+            一个有趣的实验
+        </h2>
+        
+        <div class="post-content-preview">
+            
+                
+
+
+
+  
+    
+      符号
+      描述
+      运算规则
+    
+  
+  
+    
+      &amp;
+      与
+      两个标识位都为1时，结果才为1
+    
+    
+      丨
+      或
+      两个标识位都为0时，结果才为0
+    
+    
+      ^
+      异或
+      两个标识位相同为0，相异为1
+  ...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Q&H Blog on March 15, 2018
+    </p>
+</div>
+<hr>
+
+
+<!-- Pager -->
+
+<ul class="pager">
+    
+    <li class="previous">
+        <a href="/">&larr; Newer Posts</a>
+    </li>
+    
+    
+    <li class="next">
+        <a href="/page3">Older Posts &rarr;</a>
+    </li>
+    
+</ul>
+
+
+    		</div>
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-3 col-lg-offset-0
+                col-md-3 col-md-offset-0
+                col-sm-12
+                col-xs-12
+                sidebar-container
+            ">
+                <!-- Featured Tags -->
+                
+
+
+<section>
+    
+    <h5><a href="/archive/">FEATURED TAGS</a></h5>
+    <div class="tags">
+        
+        
+        
+        </a>
+        
+        
+                <a data-sort="0022" 
+                    href="/archive/?tag=%E8%83%A1%E8%AF%8C%E8%AF%8C"
+                    title="胡诌诌"
+                    rel="3">胡诌诌</a>
+        
+                <a data-sort="0022" 
+                    href="/archive/?tag=tool"
+                    title="tool"
+                    rel="3">tool</a>
+        
+                <a data-sort="0023" 
+                    href="/archive/?tag=%E6%80%BB%E7%BB%93"
+                    title="总结"
+                    rel="2">总结</a>
+        
+                <a data-sort="0023" 
+                    href="/archive/?tag=idea"
+                    title="idea"
+                    rel="2">idea</a>
+        
+                <a data-sort="0023" 
+                    href="/archive/?tag=jekyll"
+                    title="jekyll"
+                    rel="2">jekyll</a>
+        
+                <a data-sort="0023" 
+                    href="/archive/?tag=writing"
+                    title="writing"
+                    rel="2">writing
+    </div>
+</section>
+
+
+                <!-- Short About -->
+                <section class="visible-md visible-lg">
+  <hr>
+  <h5><a href="/about/">ABOUT ME</a></h5>
+  <div class="short-about">
+    
+    <img src="/img/avatar-me-ny.jpg" />
+    
+    
+    <p>做一个有趣会思考的逗比<br>争渡</p>
+    
+    <!-- SNS Link -->
+    
+
+
+<ul class="list-inline">
+
+
+  
+  
+  <li>
+    <a href="https://twitter.com/https://github.com/7huang">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  <li>
+    <a target="_blank" href="https://www.zhihu.com/people/xxxx">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa  fa-stack-1x fa-inverse">知</i>
+      </span>
+    </a>
+  </li>
+  
+  
+  <li>
+    <a target="_blank" href="http://weibo.com/xxxx">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  
+  <li>
+    <a target="_blank" href="https://github.com/7huang">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+</ul>
+  </div>
+</section>
+
+                <!-- Friends Blog -->
+                
+<hr>
+<h5>FRIENDS</h5>
+<ul class="list-inline">
+  
+</ul>
+
+    		</div>
+        
+	</div>
+</div>
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <!-- SNS Link -->
+                
+
+
+<ul class="list-inline text-center">
+
+
+  
+  
+  <li>
+    <a href="https://twitter.com/https://github.com/7huang">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  <li>
+    <a target="_blank" href="https://www.zhihu.com/people/xxxx">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa  fa-stack-1x fa-inverse">知</i>
+      </span>
+    </a>
+  </li>
+  
+  
+  <li>
+    <a target="_blank" href="http://weibo.com/xxxx">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  
+  <li>
+    <a target="_blank" href="https://github.com/7huang">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+</ul>
+
+                <p class="copyright text-muted">
+                    Copyright &copy; Q&H Blog 2023
+                    <br>
+                    Powered by <a href="https://7huang.github.io/">Hux Blog</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+<!-- Service Worker -->
+
+<script src="/js/snackbar.js "></script>
+<script src="/js/sw-registration.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+
+
+
+<!--fastClick.js -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+<!-- Side Catalog -->
+
+
+
+<!-- Multi-Lingual -->
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

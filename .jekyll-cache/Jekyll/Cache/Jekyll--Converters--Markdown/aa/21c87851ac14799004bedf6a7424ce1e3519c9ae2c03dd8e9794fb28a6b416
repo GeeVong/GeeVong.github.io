@@ -1,0 +1,197 @@
+I"�#<h2 id="使用gccg编译代码">使用gcc/g++编译代码</h2>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="cp">#include&lt;iostream&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+  <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">"hello world"</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<div class="language-make highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nl">hqdeMac-mini</span><span class="o">:</span><span class="nf">example1 hq$ g++ hello.cpp -o hello</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<div class="language-make highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="nl">hqdeMac-mini</span><span class="o">:</span><span class="nf">example1 hq$ ./hello </span>
+<span class="err">hello</span> <span class="err">world</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="makefile-使用">makefile 使用</h2>
+
+<h4 id="创建并编辑makefile文件末尾需要加空格">创建并编辑makefile文件(末尾需要加空格)</h4>
+
+<div class="language-make highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="nl">m_hello</span><span class="o">:</span> <span class="nf">hello.cpp</span>
+	g++ hello.cpp <span class="nt">-o</span> hello_m
+
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h4 id="执行make命令运行可执行文件-hello_m">执行make命令，运行可执行文件 hello_m</h4>
+
+<div class="language-make highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="nl">hqdeMac-mini</span><span class="o">:</span><span class="nf">example1 hq$ make</span>
+<span class="err">g++</span> <span class="err">hello.cpp</span> <span class="err">-o</span> <span class="err">hello_m</span>
+<span class="nl">hqdeMac-mini</span><span class="o">:</span><span class="nf">example1 hq$ ls</span>
+<span class="err">hello.cpp</span>	<span class="err">hello_m</span>		<span class="err">makefile</span>
+<span class="nl">hqdeMac-mini</span><span class="o">:</span><span class="nf">example1 hq$ ./hello_m </span>
+<span class="err">hello</span> <span class="err">world</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h4 id="makefile-还有很多丰富的使用方式-todo">makefile 还有很多丰富的使用方式 todo</h4>
+
+<p>这里有个简易笔记连接<a href="http://note.youdao.com/noteshare?id=86717e7b9ca72a124c8de079bb1ddae8">Link</a></p>
+
+<h2 id="cmake使用">Cmake使用</h2>
+
+<h4 id="编写cmakelisttxt-文件todo-熟悉cmake语法">编写CMakeList.txt 文件（todo 熟悉cmake语法）</h4>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="rouge-code"><pre><span class="nb">cmake_minimum_required</span><span class="p">(</span>VERSION 3.14<span class="p">)</span>
+<span class="nb">project</span><span class="p">(</span>TestCmake<span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span>cmake_build_type debug<span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span>CMAKE_CXX_STANDARD 14<span class="p">)</span>
+<span class="nb">add_executable</span><span class="p">(</span>
+        TestCmake
+        src/main.cpp
+        src/a.cpp
+        include/a.h
+<span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h4 id="通过cmake-命令生成-makefile文件">通过(cmake .)命令生成 makefile文件。</h4>
+
+<pre><code class="language-cmke">hqdeMac-mini:TestCmake hq$ cmake .
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/hq/CLionProjects/TestCmake
+hqdeMac-mini:TestCmake hq$ ls
+CMakeCache.txt          CMakeFiles              CMakeLists.txt          Makefile                bin                     cmake_install.cmake     include                 src
+</code></pre>
+
+<h4 id="通过make命令编译代码生成testcmake-可执行文件文件">通过(<strong>make)</strong>命令编译代码，生成TestCmake 可执行文件文件。</h4>
+
+<pre><code class="language-cmke">hqdeMac-mini:TestCmake hq$ make
+[ 33%] Linking CXX executable TestCmake
+[100%] Built target TestCmake
+hqdeMac-mini:TestCmake hq$ ls
+CMakeCache.txt          CMakeLists.txt          TestCmake               cmake_install.cmake     src
+CMakeFiles              Makefile                bin                     include
+</code></pre>
+
+<h4 id="运行可执行文件--testcmake">运行可执行文件  ./TestCmake</h4>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre>hqdeMac-mini:TestCmake hq$ ./TestCmake 
+a is 5.000000, b is 25.000000
+hqdeMac-mini:TestCmake hq$ 
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="测试代码">测试代码</h2>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="rouge-code"><pre><span class="c1">// file a.h</span>
+<span class="c1">// Created by hq on 2019/9/4.</span>
+<span class="c1">//</span>
+
+<span class="cp">#ifndef UNTITLED_A_H
+#define UNTITLED_A_H
+#include&lt;math.h&gt;
+</span>
+<span class="kt">double</span> <span class="nf">get_sqrt</span><span class="p">(</span><span class="kt">double</span> <span class="n">var1</span><span class="p">);</span>
+<span class="cp">#endif //UNTITLED_A_H
+</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="rouge-code"><pre><span class="c1">// file a.cpp</span>
+<span class="c1">// Created by hq on 2019/9/4.</span>
+<span class="c1">//</span>
+
+<span class="cp">#include"../include/a.h"
+</span><span class="kt">double</span> <span class="nf">get_sqrt</span><span class="p">(</span><span class="kt">double</span> <span class="n">var1</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">var1</span><span class="p">);</span>
+<span class="p">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td><td class="rouge-code"><pre><span class="cp">#ifndef UNTITLED_MAIN_H
+#define UNTITLED_MAIN_H
+#include&lt;stdio.h&gt;
+#include"../include/a.h"
+</span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">double</span> <span class="n">b</span><span class="o">=</span><span class="mf">25.0</span><span class="p">;</span>
+    <span class="kt">double</span> <span class="n">a</span><span class="o">=</span><span class="mf">0.0</span><span class="p">;</span>
+    <span class="n">a</span><span class="o">=</span><span class="n">get_sqrt</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">"a is %lf, b is %lf</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="cp">#endif //UNTITLED_MAIN_H
+</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+:ET

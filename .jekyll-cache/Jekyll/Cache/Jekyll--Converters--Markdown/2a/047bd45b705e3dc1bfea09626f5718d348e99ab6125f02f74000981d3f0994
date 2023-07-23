@@ -1,0 +1,65 @@
+I"�<p>// todo</p>
+
+<ul>
+  <li>
+    <p>记账目的</p>
+
+    <p>掌握经济状况</p>
+
+    <p>分析自己的消费习惯，思考生活观念，提供数据依据</p>
+
+    <p>我们的财富没有减少，只是在交易过程中贬值了而已</p>
+  </li>
+  <li>
+    <p>工具：beancount</p>
+  </li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="rouge-code"><pre>brew <span class="nb">install </span>hg
+hg clone https://bitbucket.org/blais/beancount
+
+brew <span class="nb">install </span>python3
+
+在/Users/hq/selfProject/beancount/beancount 目录下执行命令
+ pip3 <span class="nb">install</span> <span class="nb">.</span>
+ 
+ 在/Users/hq/selfProject/beancount/beancount/examples 目录下执行
+ fava example.beancount
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<ul>
+  <li>
+    <p>复式记账</p>
+
+    <p>1<strong>.收入</strong>和<strong>支出</strong>为交易</p>
+
+    <ul>
+      <li>资产 Assets —— 现金、银行存款、有价证券等；</li>
+      <li>负债 Liabilities —— 信用卡、房贷、车贷等；</li>
+      <li>收入 Income —— 工资、奖金等；</li>
+      <li>费用 Expenses —— 外出就餐、购物、旅行等；</li>
+      <li>权益 Equity —— 用于「存放」某个时间段开始前已有的豆子，下文详述。</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Credits:</p>
+
+<p>Debits:</p>
+
+<p>资料：https://yuchi.me/post/beancount-intro/#options</p>
+
+<p>https://wzyboy.im/post/1063.html</p>
+
+<p>http://lidongchao.com/2018/07/20/has_header_in_csv_Sniffer/</p>
+:ET

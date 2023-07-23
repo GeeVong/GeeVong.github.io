@@ -1,0 +1,232 @@
+I";+
+<hr />
+
+<table>
+  <thead>
+    <tr>
+      <th>符号</th>
+      <th>描述</th>
+      <th>运算规则</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>&amp;</strong></td>
+      <td>与</td>
+      <td>两个标识位都为1时，结果才为1</td>
+    </tr>
+    <tr>
+      <td><strong>丨</strong></td>
+      <td>或</td>
+      <td>两个标识位都为0时，结果才为0</td>
+    </tr>
+    <tr>
+      <td><strong>^</strong></td>
+      <td>异或</td>
+      <td>两个标识位相同为0，相异为1</td>
+    </tr>
+    <tr>
+      <td><strong>~</strong></td>
+      <td>取反</td>
+      <td>0变1，1变0</td>
+    </tr>
+    <tr>
+      <td><strong>«</strong></td>
+      <td>左移</td>
+      <td>各二进制位全部左移若干位，高位丢弃，低位补0</td>
+    </tr>
+    <tr>
+      <td><strong>»</strong></td>
+      <td>右移</td>
+      <td>各二进制位全部右移若干位，对无符号数，高位补0，有符号数，各编译器处理方法不一样，有的补符号位（算术右移），有的补0（逻辑右移）</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>计算过程：</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>outbin(17);</td>
+      <td>// 00000000000000000000000000010001</td>
+    </tr>
+    <tr>
+      <td>outbin(4294967295);</td>
+      <td>// 11111111111111111111111111111111</td>
+    </tr>
+    <tr>
+      <td>outbin(4294967296);</td>
+      <td>// 00000000000000000000000000000000</td>
+    </tr>
+    <tr>
+      <td>outbin(4294967297);</td>
+      <td>// 00000000000000000000000000000001</td>
+    </tr>
+    <tr>
+      <td>outbin(17);</td>
+      <td>//00010001</td>
+    </tr>
+    <tr>
+      <td>cout«(17«1)«endl;</td>
+      <td>//34</td>
+    </tr>
+    <tr>
+      <td>outbin(34);</td>
+      <td>//00100010</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>左移相当于乘2 ，当然右移就是相当于除以2了</p>
+
+<p><strong>位存储状态:</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre>枚举标识数据存储下标.这里若所在位为1，为活跃状态。
+通过attach_mask |= 1 &lt;&lt; ACTION_TYPE_AGE_INFO 形式将数据标识活跃状态
+通过if (0 != (attach_mask &amp; (1 &lt;&lt; i)))做判断，是否数据为活跃状态
+通过attach_mask &amp;= ~(1 &lt;&lt; ACTION_TYPE_AGE_INFO) 对状态修改为0
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+</pre></td><td class="rouge-code"><pre>
+	<span class="cp">#include&lt;iostream&gt;
+</span>	<span class="cp">#include &lt;bitset&gt;
+</span>	<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+	<span class="k">enum</span> <span class="n">StutasInfoStorage</span>
+	<span class="p">{</span>
+		<span class="n">ACTION_TYPE_LEVEL_INFO</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+		<span class="n">ACTION_TYPE_AGE_INFO</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+		<span class="n">ACTION_TYPE_MAX_NUM</span><span class="p">,</span>
+	<span class="p">};</span>
+	<span class="k">const</span> <span class="k">static</span> <span class="kt">int</span> <span class="n">ATTACH_DATA_LENGTH</span> <span class="o">=</span> <span class="mi">2048</span><span class="p">;</span>
+	<span class="kt">int</span>				<span class="n">attach_mask</span><span class="p">;</span>
+	<span class="kt">char</span>			<span class="n">attach_data</span><span class="p">[</span><span class="n">ATTACH_DATA_LENGTH</span><span class="p">];</span>
+	<span class="kt">void</span> <span class="nf">outbin</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">bitset</span><span class="o">&lt;</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">*</span><span class="mi">8</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span> <span class="p">}</span>	<span class="c1">// 二进制输出 </span>
+	<span class="kt">void</span> <span class="nf">outoct</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">oct</span><span class="o">&lt;&lt;</span><span class="n">x</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span> <span class="p">}</span>						<span class="c1">// 八进制输出  </span>
+	<span class="kt">void</span> <span class="nf">outhex</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">hex</span><span class="o">&lt;&lt;</span><span class="n">x</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span> <span class="p">}</span>						<span class="c1">// 十六进制输出 </span>
+	<span class="kt">void</span> <span class="nf">chartobit</span><span class="p">()</span>
+	<span class="p">{</span>
+		<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">code</span> <span class="o">=</span> <span class="mi">255</span><span class="p">;</span> 
+		<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">7</span><span class="p">;</span> <span class="n">i</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span> 
+		<span class="p">{</span>  
+			<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="p">((</span><span class="n">code</span> <span class="o">&gt;&gt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">);</span>      
+		<span class="p">}</span>  
+		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span> 
+	<span class="p">}</span>
+	<span class="kt">void</span> <span class="nf">GetLevelInfo</span><span class="p">()</span>
+	<span class="p">{</span>
+		<span class="n">attach_mask</span> <span class="o">|=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">ACTION_TYPE_LEVEL_INFO</span><span class="p">;</span>  
+	<span class="p">}</span>
+	<span class="kt">void</span> <span class="nf">GetAgeInfo</span><span class="p">()</span>
+	<span class="p">{</span>
+		<span class="n">attach_mask</span> <span class="o">|=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">ACTION_TYPE_AGE_INFO</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="kt">void</span> <span class="nf">OutActionTypeInf</span><span class="p">()</span>
+	<span class="p">{</span>
+		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">ACTION_TYPE_MAX_NUM</span><span class="p">;</span> <span class="n">i</span> <span class="o">++</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="k">if</span> <span class="p">(</span><span class="mi">0</span> <span class="o">!=</span> <span class="p">(</span><span class="n">attach_mask</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)))</span>
+			<span class="p">{</span>
+				<span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">"第"</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="o">&lt;&lt;</span><span class="s">"种信息可以获取"</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="kt">void</span> <span class="nf">T_bitcalcu</span><span class="p">()</span>
+	<span class="p">{</span>	
+	
+		<span class="cm">/**************************************************
+		//&amp; | ` ~	
+		result:
+		00000000000000000000000000000000
+		00000000000000000000000000110011
+		11111111111111111111111111101110
+		00000000000000000000000000110011
+		**************************************************/</span>
+		<span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">"//&amp; | ` ~"</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+		<span class="n">outbin</span><span class="p">((</span><span class="mi">17</span><span class="o">&amp;</span><span class="mi">34</span><span class="p">));</span>		
+		<span class="n">outbin</span><span class="p">(</span><span class="mi">17</span><span class="o">|</span><span class="mi">34</span><span class="p">);</span>
+		<span class="n">outbin</span><span class="p">(</span><span class="o">~</span><span class="mi">17</span><span class="p">);</span>
+		<span class="n">outbin</span><span class="p">((</span><span class="mi">17</span><span class="o">^</span><span class="mi">34</span><span class="p">));</span>
+		<span class="n">attach_mask</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+		<span class="n">GetLevelInfo</span><span class="p">();</span>
+		<span class="n">outbin</span><span class="p">(</span><span class="n">attach_mask</span><span class="p">);</span>
+		<span class="n">GetAgeInfo</span><span class="p">();</span>
+		<span class="n">outbin</span><span class="p">(</span><span class="n">attach_mask</span><span class="p">);</span>
+		<span class="n">OutActionTypeInf</span><span class="p">();</span>
+		<span class="n">attach_mask</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">ACTION_TYPE_AGE_INFO</span><span class="p">);</span>
+		<span class="n">OutActionTypeInf</span><span class="p">();</span>
+	<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+:ET
