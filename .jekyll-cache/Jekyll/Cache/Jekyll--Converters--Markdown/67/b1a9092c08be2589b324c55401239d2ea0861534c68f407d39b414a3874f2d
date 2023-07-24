@@ -1,4 +1,4 @@
-I";+
+I"�+
 <hr />
 
 <table>
@@ -161,8 +161,8 @@
 67
 68
 </pre></td><td class="rouge-code"><pre>
-	<span class="cp">#include&lt;iostream&gt;
-</span>	<span class="cp">#include &lt;bitset&gt;
+	<span class="cp">#include</span><span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span>	<span class="cp">#include</span> <span class="cpf">&lt;bitset&gt;</span><span class="cp">
 </span>	<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 	<span class="k">enum</span> <span class="n">StutasInfoStorage</span>
 	<span class="p">{</span>
@@ -173,10 +173,10 @@
 	<span class="k">const</span> <span class="k">static</span> <span class="kt">int</span> <span class="n">ATTACH_DATA_LENGTH</span> <span class="o">=</span> <span class="mi">2048</span><span class="p">;</span>
 	<span class="kt">int</span>				<span class="n">attach_mask</span><span class="p">;</span>
 	<span class="kt">char</span>			<span class="n">attach_data</span><span class="p">[</span><span class="n">ATTACH_DATA_LENGTH</span><span class="p">];</span>
-	<span class="kt">void</span> <span class="nf">outbin</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">bitset</span><span class="o">&lt;</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">*</span><span class="mi">8</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span> <span class="p">}</span>	<span class="c1">// 二进制输出 </span>
-	<span class="kt">void</span> <span class="nf">outoct</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">oct</span><span class="o">&lt;&lt;</span><span class="n">x</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span> <span class="p">}</span>						<span class="c1">// 八进制输出  </span>
-	<span class="kt">void</span> <span class="nf">outhex</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">hex</span><span class="o">&lt;&lt;</span><span class="n">x</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span> <span class="p">}</span>						<span class="c1">// 十六进制输出 </span>
-	<span class="kt">void</span> <span class="nf">chartobit</span><span class="p">()</span>
+	<span class="kt">void</span> <span class="n">outbin</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">bitset</span><span class="o">&lt;</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">*</span><span class="mi">8</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span> <span class="p">}</span>	<span class="c1">// 二进制输出 </span>
+	<span class="kt">void</span> <span class="n">outoct</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">oct</span><span class="o">&lt;&lt;</span><span class="n">x</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span> <span class="p">}</span>						<span class="c1">// 八进制输出  </span>
+	<span class="kt">void</span> <span class="n">outhex</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">hex</span><span class="o">&lt;&lt;</span><span class="n">x</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span> <span class="p">}</span>						<span class="c1">// 十六进制输出 </span>
+	<span class="kt">void</span> <span class="n">chartobit</span><span class="p">()</span>
 	<span class="p">{</span>
 		<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">code</span> <span class="o">=</span> <span class="mi">255</span><span class="p">;</span> 
 		<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">7</span><span class="p">;</span> <span class="n">i</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span> 
@@ -185,15 +185,15 @@
 		<span class="p">}</span>  
 		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span> 
 	<span class="p">}</span>
-	<span class="kt">void</span> <span class="nf">GetLevelInfo</span><span class="p">()</span>
+	<span class="kt">void</span> <span class="n">GetLevelInfo</span><span class="p">()</span>
 	<span class="p">{</span>
 		<span class="n">attach_mask</span> <span class="o">|=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">ACTION_TYPE_LEVEL_INFO</span><span class="p">;</span>  
 	<span class="p">}</span>
-	<span class="kt">void</span> <span class="nf">GetAgeInfo</span><span class="p">()</span>
+	<span class="kt">void</span> <span class="n">GetAgeInfo</span><span class="p">()</span>
 	<span class="p">{</span>
 		<span class="n">attach_mask</span> <span class="o">|=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">ACTION_TYPE_AGE_INFO</span><span class="p">;</span>
 	<span class="p">}</span>
-	<span class="kt">void</span> <span class="nf">OutActionTypeInf</span><span class="p">()</span>
+	<span class="kt">void</span> <span class="n">OutActionTypeInf</span><span class="p">()</span>
 	<span class="p">{</span>
 		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">ACTION_TYPE_MAX_NUM</span><span class="p">;</span> <span class="n">i</span> <span class="o">++</span><span class="p">)</span>
 		<span class="p">{</span>
@@ -203,7 +203,7 @@
 			<span class="p">}</span>
 		<span class="p">}</span>
 	<span class="p">}</span>
-	<span class="kt">void</span> <span class="nf">T_bitcalcu</span><span class="p">()</span>
+	<span class="kt">void</span> <span class="n">T_bitcalcu</span><span class="p">()</span>
 	<span class="p">{</span>	
 	
 		<span class="cm">/**************************************************

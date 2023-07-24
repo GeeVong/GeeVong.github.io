@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="关于程序与设计、黑客与画家 | 黄琪 Sever Engineer，GameDevper | 这里是 @Huangqi黄琪 的个人博客，找寻乐趣，做有趣的事，哈哈哈～">
-    <meta name="keywords"  content=" 黄琪 Sever Engineer，GameDevper, Huang Blog, 博客, 个人网站, 游戏开发, c++, goland, lua, 服务器">
+    <meta name="description" content="关于程序与设计、黑客与画家 | 黄琪 Sever Engineer，GameDevper | 这里是 @GeeVong 的个人博客，找寻乐趣，做有趣的事，哈哈哈～">
+    <meta name="keywords"  content=" GeeVong Sever Engineer，GameDevper, Huang Blog, 博客, 个人网站, 游戏开发, c++, goland, lua, 服务器">
     <meta name="theme-color" content="#000000">
     
     <!-- Open Graph -->
@@ -24,8 +24,8 @@
     <meta property="article:tag" content="tool">
     
     
-    <meta property="og:image" content="https://7huang.github.io//img/avatar-me-ny.jpg">
-    <meta property="og:url" content="https://7huang.github.io//%E5%8A%A8%E5%8A%A8%E6%89%8B/2019/09/04/compiler-tool-using/">
+    <meta property="og:image" content="http://localhost:4000/img/avatar-me-ny.jpg">
+    <meta property="og:url" content="http://localhost:4000/%E5%8A%A8%E5%8A%A8%E6%89%8B/2019/09/04/compiler-tool-using/">
     <meta property="og:site_name" content="Q&H's Blog">
     
     <title>编译工具使用 - Q&H's Blog</title>
@@ -37,7 +37,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://7huang.github.io//%E5%8A%A8%E5%8A%A8%E6%89%8B/2019/09/04/compiler-tool-using/">
+    <link rel="canonical" href="http://localhost:4000/%E5%8A%A8%E5%8A%A8%E6%89%8B/2019/09/04/compiler-tool-using/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -249,7 +249,7 @@
 4
 5
 6
-</pre></td><td class="rouge-code"><pre><span class="cp">#include&lt;iostream&gt;
+</pre></td><td class="rouge-code"><pre><span class="cp">#include</span><span class="cpf">&lt;iostream&gt;</span><span class="cp">
 </span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 <span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
   <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">"hello world"</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
@@ -376,7 +376,7 @@ hqdeMac-mini:TestCmake hq$
 
 <span class="cp">#ifndef UNTITLED_A_H
 #define UNTITLED_A_H
-#include&lt;math.h&gt;
+#include</span><span class="cpf">&lt;math.h&gt;</span><span class="cp">
 </span>
 <span class="kt">double</span> <span class="nf">get_sqrt</span><span class="p">(</span><span class="kt">double</span> <span class="n">var1</span><span class="p">);</span>
 <span class="cp">#endif //UNTITLED_A_H
@@ -397,7 +397,7 @@ hqdeMac-mini:TestCmake hq$
 <span class="c1">// Created by hq on 2019/9/4.</span>
 <span class="c1">//</span>
 
-<span class="cp">#include"../include/a.h"
+<span class="cp">#include</span><span class="cpf">"../include/a.h"</span><span class="cp">
 </span><span class="kt">double</span> <span class="nf">get_sqrt</span><span class="p">(</span><span class="kt">double</span> <span class="n">var1</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">var1</span><span class="p">);</span>
@@ -422,8 +422,8 @@ hqdeMac-mini:TestCmake hq$
 15
 </pre></td><td class="rouge-code"><pre><span class="cp">#ifndef UNTITLED_MAIN_H
 #define UNTITLED_MAIN_H
-#include&lt;stdio.h&gt;
-#include"../include/a.h"
+#include</span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+#include</span><span class="cpf">"../include/a.h"</span><span class="cp">
 </span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="kt">double</span> <span class="n">b</span><span class="o">=</span><span class="mf">25.0</span><span class="p">;</span>
@@ -496,32 +496,32 @@ hqdeMac-mini:TestCmake hq$
         </a>
         
         
-                <a data-sort="0022" 
+                <a data-sort="0023" 
                     href="/archive/?tag=%E8%83%A1%E8%AF%8C%E8%AF%8C"
                     title="胡诌诌"
                     rel="3">胡诌诌</a>
         
-                <a data-sort="0022" 
+                <a data-sort="0023" 
+                    href="/archive/?tag=%E6%80%BB%E7%BB%93"
+                    title="总结"
+                    rel="3">总结</a>
+        
+                <a data-sort="0023" 
                     href="/archive/?tag=tool"
                     title="tool"
                     rel="3">tool</a>
         
-                <a data-sort="0023" 
-                    href="/archive/?tag=%E6%80%BB%E7%BB%93"
-                    title="总结"
-                    rel="2">总结</a>
-        
-                <a data-sort="0023" 
+                <a data-sort="0024" 
                     href="/archive/?tag=idea"
                     title="idea"
                     rel="2">idea</a>
         
-                <a data-sort="0023" 
+                <a data-sort="0024" 
                     href="/archive/?tag=jekyll"
                     title="jekyll"
                     rel="2">jekyll</a>
         
-                <a data-sort="0023" 
+                <a data-sort="0024" 
                     href="/archive/?tag=writing"
                     title="writing"
                     rel="2">writing
@@ -552,9 +552,9 @@ hqdeMac-mini:TestCmake hq$
 <!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
-    var disqus_shortname = "Q&H";
+    var disqus_shortname = "GeeVong";
     var disqus_identifier = "/%E5%8A%A8%E5%8A%A8%E6%89%8B/2019/09/04/compiler-tool-using";
-    var disqus_url = "https://7huang.github.io//%E5%8A%A8%E5%8A%A8%E6%89%8B/2019/09/04/compiler-tool-using/";
+    var disqus_url = "http://localhost:4000/%E5%8A%A8%E5%8A%A8%E6%89%8B/2019/09/04/compiler-tool-using/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -618,7 +618,7 @@ hqdeMac-mini:TestCmake hq$
   
   
   <li>
-    <a href="https://twitter.com/https://github.com/7huang">
+    <a href="https://twitter.com/https://github.com/GeeVong">
       <span class="fa-stack fa-lg">
         <i class="fa fa-circle fa-stack-2x"></i>
         <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
@@ -649,7 +649,7 @@ hqdeMac-mini:TestCmake hq$
   
   
   <li>
-    <a target="_blank" href="https://github.com/7huang">
+    <a target="_blank" href="https://github.com/GeeVong">
       <span class="fa-stack fa-lg">
         <i class="fa fa-circle fa-stack-2x"></i>
         <i class="fa fa-github fa-stack-1x fa-inverse"></i>

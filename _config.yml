@@ -3,8 +3,8 @@ title: Q&H Blog
 SEOTitle: Q&H's Blog
 header-img: img/home-bg.jpg
 email: lodaccx@gmail.com
-description: "关于程序与设计、黑客与画家 | 黄琪 Sever Engineer，GameDevper | 这里是 @Huangqi黄琪 的个人博客，找寻乐趣，做有趣的事，哈哈哈～"
-keyword: " 黄琪 Sever Engineer，GameDevper, Huang Blog, 博客, 个人网站, 游戏开发, c++, goland, lua, 服务器"
+description: "关于程序与设计、黑客与画家 | 黄琪 Sever Engineer，GameDevper | 这里是 @GeeVong 的个人博客，找寻乐趣，做有趣的事，哈哈哈～"
+keyword: " GeeVong Sever Engineer，GameDevper, Huang Blog, 博客, 个人网站, 游戏开发, c++, goland, lua, 服务器"
 url: "https://7huang.github.io/"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
@@ -15,8 +15,8 @@ future: true
 RSS: false
 weibo_username:     xxxx
 zhihu_username:     xxxx
-github_username:    7huang
-twitter_username:   https://github.com/7huang
+github_username:    GeeVong
+twitter_username:   https://github.com/GeeVong
 #facebook_username:  huxpro
 #linkedin_username:  firstname-lastname-idxxxx
 
@@ -59,7 +59,7 @@ kramdown:
 
 
 # Disqus settings
-disqus_username: Q&H
+disqus_username: GeeVong
 
 # Netease settings
 netease_comment: false

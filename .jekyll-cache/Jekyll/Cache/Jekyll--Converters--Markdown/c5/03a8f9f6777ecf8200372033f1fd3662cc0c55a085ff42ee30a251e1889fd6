@@ -1,4 +1,4 @@
-I":<ul id="markdown-toc">
+I"@:<ul id="markdown-toc">
   <li><a href="#动手实践模板" id="markdown-toc-动手实践模板">动手实践模板</a></li>
 </ul>
 
@@ -100,7 +100,7 @@
 * Source: 
 * Describe: 
 **************************************************/</span>
-<span class="cp">#include &lt;iostream&gt;
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
 </span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="p">&gt;</span>			<span class="c1">//1. 函数模板</span>
 <span class="n">T</span> <span class="nf">Compare</span><span class="p">(</span><span class="n">T</span> <span class="n">a</span><span class="p">,</span> <span class="n">T</span> <span class="n">b</span><span class="p">)</span>
 <span class="p">{</span>
@@ -148,7 +148,7 @@
 <span class="nl">public:</span>
 	<span class="n">T</span> <span class="n">_v</span><span class="p">[</span><span class="mi">888</span><span class="p">];</span>
 <span class="p">};</span>
-<span class="kt">int</span> <span class="nf">T_templedemo</span><span class="p">()</span>
+<span class="kt">int</span> <span class="n">T_templedemo</span><span class="p">()</span>
 <span class="p">{</span>
 	<span class="n">cout</span><span class="o">&lt;&lt;</span> <span class="n">Compare</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">10</span> <span class="p">,</span> <span class="mi">8</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>	<span class="c1">// 函数模板</span>
 	<span class="n">SrcOpertClass</span> <span class="n">soc</span><span class="p">;</span>					<span class="c1">// 类模板s</span>
